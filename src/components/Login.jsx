@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from '../HIP-logo-01.png'
+import axios from 'axios'
+import Alert from '@mui/material/Alert';
 function Copyright(props) {
   return (
     <Typography
@@ -35,6 +37,25 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [email,setEmail] = React.useState("")
+  const [password,setPassword] = React.useState("")
+  const [loginStatus,setLoginStatus] = React.useState("")
+  const alert = <Alert severity="success">This is a success alert — check it out!</Alert>
+  const Login = () =>{
+    axios.post("http://localhost:8080/login",{
+      email:email,
+      password:password
+    }).then((res)=>{
+      console.log(res.data)
+      if(res.data.status == 200) {
+        alert()
+        localStorage.setItem('token',res.data.token)
+        window.location ='/report'
+      } else {
+        alert()
+      }
+    })
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -82,6 +103,9 @@ export default function SignIn() {
               name="รหัสพนักงาน"
               autoComplete="รหัสพนักงาน"
               autoFocus
+              onChange={((e)=>{
+                setEmail(e.target.value)
+              })}
             />
             <TextField
               margin="normal"
@@ -92,17 +116,20 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              onChange={((e)=>{
+                setPassword(e.target.value)
+              })}
             />
-            <NavLink to="/report">
+           
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                onClick={Login}
               >
                 เข้าสู่ระบบ
               </Button>
-            </NavLink>
 
 
           </Box>
