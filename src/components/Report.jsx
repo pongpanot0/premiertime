@@ -10,6 +10,7 @@ import Slide from '@mui/material/Slide';
 import './report.css'
 import Reportbase from './Reportbase';
 import logo from '../HIP-logo-01.png'
+import { Button } from '@mui/material';
 
 interface Props {
   /**
@@ -36,7 +37,32 @@ function HideOnScroll(props: Props) {
   );
 }
 
+
+
 export default function HideAppBar(props: Props) {
+  const logout = () => {
+    localStorage.removeItem('token');
+    window.location ='/'
+  };
+  
+  const logoutTimerIdRef = React.useRef(null);
+  
+  React.useEffect(() => {
+    const autoLogout = () => {
+      if (document.visibilityState === 'hidden') {
+        const timeOutId = window.setTimeout(logout, 60 * 1 * 1000);
+        logoutTimerIdRef.current = timeOutId;
+      } else {
+        window.clearTimeout(logoutTimerIdRef.current);
+      }
+    };
+  
+    document.addEventListener('visibilitychange', autoLogout);
+  
+    return () => {
+      document.removeEventListener('visibilitychange', autoLogout);
+    };
+  }, []);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -47,6 +73,7 @@ export default function HideAppBar(props: Props) {
             <Typography variant="h6" component="div" >
              <img src={logo} alt=""  width="100px" height="50px" />
             </Typography> 
+            <Button onClick={logout} style={{ color: 'white' }}>Logout</Button>
           </Toolbar>
         </AppBar>
       </HideOnScroll>

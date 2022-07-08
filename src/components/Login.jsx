@@ -16,6 +16,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import logo from '../HIP-logo-01.png'
 import axios from 'axios'
 import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
 function Copyright(props) {
   return (
     <Typography
@@ -40,22 +41,31 @@ export default function SignIn() {
   const [email,setEmail] = React.useState("")
   const [password,setPassword] = React.useState("")
   const [loginStatus,setLoginStatus] = React.useState("")
-  const alert = <Alert severity="success">This is a success alert — check it out!</Alert>
+  const [alert, setAlert] = React.useState(false);
+  const [isLoggedin, setIsLoggedin] = React.useState(false);
   const Login = () =>{
     axios.post("http://localhost:8080/login",{
       email:email,
       password:password
     }).then((res)=>{
-      console.log(res.data)
+
       if(res.data.status == 200) {
-        alert()
+        setAlert(true);
         localStorage.setItem('token',res.data.token)
+        localStorage.setItem('Companyid',res.data.user.recordset[0].CompanyID)
         window.location ='/report'
+        setIsLoggedin(true);
       } else {
-        alert()
+        setAlert(true);
+        window.location ='/report'
       }
     })
   }
+  const logout = () => {
+    localStorage.clear();
+    setIsLoggedin(false);
+    window.location ='/'
+  };
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,9 +74,31 @@ export default function SignIn() {
       password: data.get("password"),
     });
   };
+  const logoutTimerIdRef = React.useRef(null);
 
+  React.useEffect(() => {
+    const autoLogout = () => {
+      if (document.visibilityState === 'hidden') {
+        const timeOutId = window.setTimeout(logout, 1 * 1 * 1);
+        logoutTimerIdRef.current = timeOutId;
+      } else {
+        window.clearTimeout(logoutTimerIdRef.current);
+      }
+    };
+  
+    document.addEventListener('visibilitychange', autoLogout);
+  
+    return () => {
+      document.removeEventListener('visibilitychange', autoLogout);
+    };
+  }, []);
   return (
+   
     <ThemeProvider theme={theme}>
+         {alert ? <Alert variant="filled" severity="success">
+ Login Sucess
+</Alert> : <></> }
+   
       <Container component="main" maxWidth="xs" bgcolor="secondary.main">
         <CssBaseline />
         <Box
