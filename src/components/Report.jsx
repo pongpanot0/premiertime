@@ -71,7 +71,7 @@ export default function HideAppBar(props: Props) {
           <Toolbar >
             
             <Typography variant="h6" component="div" >
-             <img src={logo} alt=""  width="100px" height="50px" />
+             <img src={logo} alt=""  width="100px" height="auto" />
             </Typography> 
             <Button onClick={logout} style={{ color: 'white' }}>Logout</Button>
           </Toolbar>
