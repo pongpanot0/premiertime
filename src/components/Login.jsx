@@ -44,7 +44,7 @@ export default function SignIn() {
   const [alert, setAlert] = React.useState(false);
   const [isLoggedin, setIsLoggedin] = React.useState(false);
   const Login = () =>{
-    axios.post("http://localhost:8080/login",{
+    axios.post(`${process.env.REACT_APP_API_KEY}/login`,{
       email:email,
       password:password
     }).then((res)=>{

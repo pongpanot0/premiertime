@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Slide from '@mui/material/Slide';
 import './report.css'
 import Reportbase from './Reportbase';
-import logo from '../HIP-logo-01.png'
+import logo from '../ezLINE3.png'
 import { Button } from '@mui/material';
 
 interface Props {
@@ -45,10 +45,10 @@ export default function HideAppBar(props: Props) {
     window.location ='/'
   };
   
-  const logoutTimerIdRef = React.useRef(null);
+/*   const logoutTimerIdRef = React.useRef(null); */
   
   React.useEffect(() => {
-    const autoLogout = () => {
+/*     const autoLogout = () => {
       if (document.visibilityState === 'hidden') {
         const timeOutId = window.setTimeout(logout, 60 * 1 * 1000);
         logoutTimerIdRef.current = timeOutId;
@@ -61,7 +61,7 @@ export default function HideAppBar(props: Props) {
   
     return () => {
       document.removeEventListener('visibilitychange', autoLogout);
-    };
+    }; */
   }, []);
   return (
     <React.Fragment>
@@ -71,9 +71,9 @@ export default function HideAppBar(props: Props) {
           <Toolbar >
             
             <Typography variant="h6" component="div" >
-             <img src={logo} alt=""  width="100px" height="auto" />
+             <img src={logo} alt=""  width="150" height="auto" />
             </Typography> 
-            <Button onClick={logout} style={{ color: 'white' }}>Logout</Button>
+       {/*      <Button  onClick={logout} style={{ color: 'white' ,alignItems:'right'}}>Logout</Button> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>

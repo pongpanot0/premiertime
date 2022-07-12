@@ -7,12 +7,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
-import TablePagination from '@mui/material/TablePagination';
+import TablePagination from "@mui/material/TablePagination";
 
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
 import axios from "axios";
 export default function Tablereport() {
   const [value, setValue] = useState(new Date().toLocaleDateString("en-US"));
@@ -26,8 +26,7 @@ export default function Tablereport() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/getattendance")
-
+      .get(`${process.env.REACT_APP_API_KEY}/stamp`)
       .then((res) => {
         console.log(res.data.data);
         setCategoryList(res.data.data);
@@ -43,7 +42,9 @@ export default function Tablereport() {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -51,7 +52,7 @@ export default function Tablereport() {
   return (
     <>
       <br></br>
- 
+
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <Stack spacing={3}>
           <DesktopDatePicker
@@ -64,17 +65,17 @@ export default function Tablereport() {
         </Stack>
       </LocalizationProvider>
       <br></br>
-    
-      <TextField onChange={(e) => setSearchedVal(e.target.value)} />
-      
-      <TextField onChange={(e) => setSearchedVal2(e.target.value)} />
-      
-      <TableContainer component={Paper}>
 
-        <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+      <TextField
+        label="ค้นหาด้วยชื่อ"
+        sx={{ width: "100%" }}
+        onChange={(e) => setSearchedVal(e.target.value)}
+      />
+
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-           
               <TableCell align="center">รหัส</TableCell>
               <TableCell align="center">ชื่อ</TableCell>
               <TableCell align="center">แผนก</TableCell>
@@ -85,31 +86,22 @@ export default function Tablereport() {
               </TableCell>
             </TableRow>
           </TableHead>
-     
+
           <TableBody>
-          {CategoryList
-              .filter((row) =>
-                // note that I've incorporated the searchedVal length check here
-               ( !searchedVal.length || row.Name ,
-                !searchedVal2.length || row.Badgenumber)
-                  .toString()
-                  .toLowerCase()
-                  .includes(searchedVal.toString().toLowerCase()) 
-              ).map((row) => (
-              <TableRow align="center" key={row._id}>
-                <TableCell align="center">{row.Badgenumber}</TableCell>
-                <TableCell align="center">{row.Name}</TableCell>
-                <TableCell align="center">{row.street}</TableCell>
-                <TableCell align="center">{row.start}</TableCell>
-                <TableCell align="center">{row.end}</TableCell>
+            {CategoryList.map((row) => (
+              <TableRow align="center" key={row.employess._id}>
+                <TableCell align="center">{row.employess[0].anSEnrollNumber}</TableCell>
+                <TableCell align="center">{row.employess[0].name}</TableCell>
+                <TableCell align="center">{row.employess[0].organize}</TableCell>
+                <TableCell align="center">{row.start.time}</TableCell>
+                <TableCell align="center">{row.last.time}</TableCell>
                 <TableCell align="center">ดูประวัติย้อนหลัง</TableCell>
               </TableRow>
             ))}
           </TableBody>
-    
         </Table>
       </TableContainer>
-        <TablePagination
+      <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
         count={CategoryList.length}

@@ -22,17 +22,42 @@ const bull = (
 
 function Reportbase() {
   const [CategoryList, setCategoryList] = React.useState([]);
+  const [Count, setCount] = React.useState([]);
+  const [Distince, setDistince] = React.useState([]);
   React.useEffect(() => {
     handleChange()
+    notstamp()
+    getDistince()
   }, []);
   const handleChange = () => {
 
     axios
-      .get("http://localhost:8080/getattendance")
+      .get(`${process.env.REACT_APP_API_KEY}/getattendance`)
 
       .then((res) => {
-        console.log(res.data.data);
+        console.log('handleChange',res.data.data);
         setCategoryList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const notstamp = () => {   //เช็คคนยังไม่แสดกน
+
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/notstamp`)
+
+      .then((res) => {
+        console.log('notstamp',res.data);
+        setCount(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const getDistince = () => {   //เช็คจำนวนคนแสกนนิ้ว
+
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/distinct`)
+      .then((res) => {
+        console.log('getDistince',res.data);
+        setDistince(res.data);
       })
       .catch((err) => console.log(err));
   };
@@ -45,33 +70,19 @@ function Reportbase() {
         <React.Fragment>
           <CardContent>
             <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
-              ชื่อบริษัท HIPGLOBAL
+             HIPGLOBAL
             </Typography>
             <Typography variant="h5" component="div">
               เวลาทำงาน 08.00 - 17.00
             </Typography>
             <hr></hr>
 
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              สแกนแล้ว 0 คน
-            </Typography>
-            <Chart handleChange={CategoryList}/>
+            <Chart handleChange={CategoryList} notstamp={Count} getDistince={Distince}/>
             <Tablereport />
-            <br></br>
-            <Typography variant="body5">
-              ot หลังเลิกงาน ออก โอที
-              <br></br>
-              <hr></hr>
-            </Typography>
+  
             <Typography variant="h5">ยังไม่สแกน 1 คน</Typography>
             <Noattendance />
           </CardContent>
-          <CardActions>
-            <Typography variant="body2">
-              สรุปข้อมูลนี้เมื่อเวลา 04/07/2022 16:31:32 SN CMYD212560025 Online
-              04/07/2022 16:29 att logs 5423
-            </Typography>
-          </CardActions>
           <CardContent>
             <ReportAccoding />
           </CardContent>

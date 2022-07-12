@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button } from '@mui/material';
 import {Link } from 'react-router-dom'
-
+import Calendar from './Calendar';
+import Modal from 'react-modal'
 export default function ReportAccoding() {
   const [value, setValue] = React.useState([null, null]);
   return (
@@ -20,11 +21,9 @@ export default function ReportAccoding() {
           <Typography>ดูข้อมูลเข้าออกย้อนหลัง</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-          <Button>4/7/2022</Button> 
-          <br></br>
-          <Button>4/7/2022</Button>
-          </Typography>
+     
+          <Calendar/>
+      
         </AccordionDetails>
       </Accordion>
       <hr></hr>
@@ -37,16 +36,7 @@ export default function ReportAccoding() {
           <Typography>ดูสรุปเวลารายเดือน</Typography>
         </AccordionSummary>
         <AccordionDetails>
-        <Typography>
-        <Link to="/monthreport">
-          <Button>มกราคม</Button>
-          </Link>
-          <br></br>
-          <Link to="/monthreport">
-          <Button>กุมภาพันธ์</Button>
-          </Link>
-          
-          </Typography>
+   
         </AccordionDetails>
       </Accordion>
       <hr></hr>

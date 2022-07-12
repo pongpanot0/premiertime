@@ -18,7 +18,7 @@ export default function Noattendance() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-           1.นายพงศ์ปณต สมัครการ
+           1.ทดสอบ นามสมมุติ
           </Typography>
         </AccordionDetails>
       </Accordion>
