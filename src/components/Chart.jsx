@@ -13,12 +13,13 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 
-export default function Example({ handleChange, notstamp, getDistince }) {
+export default function Example({ handleChange, notstamp, getDistince,countEmployees }) {
   console.log(notstamp);
   console.log(handleChange);
   console.log(getDistince);
+  console.log(countEmployees);
   const data = [
-    { name: "เข้างานแล้ว", value: 1 },
+    { name: "เข้างานแล้ว", value: getDistince.count},
     { name: "ยังไม่เข้างาน", value: notstamp.count },
   ];
 
@@ -31,7 +32,6 @@ export default function Example({ handleChange, notstamp, getDistince }) {
   }));
 
   const COLORS = ["#0088FE", "#FF8042"];
-  const [open, setOpen] = React.useState(false);
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
@@ -62,7 +62,7 @@ export default function Example({ handleChange, notstamp, getDistince }) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={{ xs: 2, md: 3 }}>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={12}>
           <Item>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart width={400} height={250}>
@@ -90,8 +90,8 @@ export default function Example({ handleChange, notstamp, getDistince }) {
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           <Item>
-            <Typography>จำนวนพนักงานทั้งหมด : {notstamp.count}</Typography>
-            <Typography>เข้างานแล้ว : 1 </Typography>
+            <Typography>จำนวนพนักงานทั้งหมด : {countEmployees}</Typography>
+            <Typography>เข้างานแล้ว : {getDistince.count}</Typography>
             <Typography>ยังไม่เข้างาน : {notstamp.count}</Typography>
           </Item>
         </Grid>

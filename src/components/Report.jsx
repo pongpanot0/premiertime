@@ -1,16 +1,16 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Slide from '@mui/material/Slide';
-import './report.css'
-import Reportbase from './Reportbase';
-import logo from '../ezLINE3.png'
-import { Button } from '@mui/material';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Slide from "@mui/material/Slide";
+import "./report.css";
+import Reportbase from "./Reportbase";
+import logo from "../ezLINE3.png";
+import { Button } from "@mui/material";
 
 interface Props {
   /**
@@ -37,50 +37,49 @@ function HideOnScroll(props: Props) {
   );
 }
 
-
-
 export default function HideAppBar(props: Props) {
+
   const logout = () => {
-    localStorage.removeItem('token');
-    window.location ='/'
+    localStorage.removeItem("token");
+    window.location = "/";
   };
-  
-/*   const logoutTimerIdRef = React.useRef(null); */
-  
+
+  const logoutTimerIdRef = React.useRef(null);
+
   React.useEffect(() => {
-/*     const autoLogout = () => {
-      if (document.visibilityState === 'hidden') {
-        const timeOutId = window.setTimeout(logout, 60 * 1 * 1000);
+
+    const autoLogout = () => {
+      if (document.visibilityState === "hidden") {
+        const timeOutId = window.setTimeout(logout, 60 * 60 * 1000);
         logoutTimerIdRef.current = timeOutId;
       } else {
         window.clearTimeout(logoutTimerIdRef.current);
       }
     };
-  
-    document.addEventListener('visibilitychange', autoLogout);
-  
+
+    document.addEventListener("visibilitychange", autoLogout);
+
     return () => {
-      document.removeEventListener('visibilitychange', autoLogout);
-    }; */
+      document.removeEventListener("visibilitychange", autoLogout);
+    };
   }, []);
   return (
     <React.Fragment>
       <CssBaseline />
       <HideOnScroll {...props}>
-        <AppBar  style={{ background: '#13499f' }} >
-          <Toolbar >
-            
-            <Typography variant="h6" component="div" >
-             <img src={logo} alt=""  width="150" height="auto" />
-            </Typography> 
-       {/*      <Button  onClick={logout} style={{ color: 'white' ,alignItems:'right'}}>Logout</Button> */}
+        <AppBar style={{ background: "#13499f" }}>
+          <Toolbar>
+            <Typography variant="h6" component="div">
+              <img src={logo} alt="" width="150" height="auto" />
+            </Typography>
+            {/*      <Button  onClick={logout} style={{ color: 'white' ,alignItems:'right'}}>Logout</Button> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <Toolbar />
       <Container>
         <br></br>
-       <Reportbase/>
+        <Reportbase />
       </Container>
     </React.Fragment>
   );

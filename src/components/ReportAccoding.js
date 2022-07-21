@@ -1,18 +1,20 @@
-import * as React from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Button } from '@mui/material';
-import {Link } from 'react-router-dom'
-import Calendar from './Calendar';
-import Modal from 'react-modal'
+import * as React from "react";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import Calendar from "./Calendar";
+import Modal from "react-modal";
+import axios from "axios";
 export default function ReportAccoding() {
   const [value, setValue] = React.useState([null, null]);
+
   return (
     <div>
-  <Accordion>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -21,9 +23,7 @@ export default function ReportAccoding() {
           <Typography>ดูข้อมูลเข้าออกย้อนหลัง</Typography>
         </AccordionSummary>
         <AccordionDetails>
-     
-          <Calendar/>
-      
+          <Calendar />
         </AccordionDetails>
       </Accordion>
       <hr></hr>
@@ -35,9 +35,7 @@ export default function ReportAccoding() {
         >
           <Typography>ดูสรุปเวลารายเดือน</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-   
-        </AccordionDetails>
+        <AccordionDetails></AccordionDetails>
       </Accordion>
       <hr></hr>
       <Accordion>
@@ -48,9 +46,7 @@ export default function ReportAccoding() {
         >
           <Typography>สรุปรายเดือนตามช่วงเวลา</Typography>
         </AccordionSummary>
-        <AccordionDetails>
-
-        </AccordionDetails>
+        <AccordionDetails></AccordionDetails>
       </Accordion>
     </div>
   );

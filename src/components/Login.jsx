@@ -40,7 +40,6 @@ const theme = createTheme();
 export default function SignIn() {
   const [email,setEmail] = React.useState("")
   const [password,setPassword] = React.useState("")
-  const [loginStatus,setLoginStatus] = React.useState("")
   const [alert, setAlert] = React.useState(false);
   const [isLoggedin, setIsLoggedin] = React.useState(false);
   const Login = () =>{
@@ -57,7 +56,6 @@ export default function SignIn() {
         setIsLoggedin(true);
       } else {
         setAlert(true);
-        window.location ='/report'
       }
     })
   }

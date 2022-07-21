@@ -90,9 +90,13 @@ export default function Tablereport() {
           <TableBody>
             {CategoryList.map((row) => (
               <TableRow align="center" key={row.employess._id}>
-                <TableCell align="center">{row.employess[0].anSEnrollNumber}</TableCell>
+                <TableCell align="center">
+                  {row.employess[0].anSEnrollNumber}
+                </TableCell>
                 <TableCell align="center">{row.employess[0].name}</TableCell>
-                <TableCell align="center">{row.employess[0].organize}</TableCell>
+                <TableCell align="center">
+                  {row.employess[0].organize}
+                </TableCell>
                 <TableCell align="center">{row.start.time}</TableCell>
                 <TableCell align="center">{row.last.time}</TableCell>
                 <TableCell align="center">ดูประวัติย้อนหลัง</TableCell>

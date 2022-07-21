@@ -1,46 +1,33 @@
-import React, { useState,useEffect, useRef } from "react";
-import FullCalendar from "@fullcalendar/react"; // must go before plugins
-import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
+import React, { useState, useEffect, useRef } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 import axios from "axios";
-import interactionPlugin from "@fullcalendar/interaction"
-import esLocale from '@fullcalendar/core/locales/th'
 export default function Calendar() {
-    const calendarRef = useRef()
-  const [date, setDate] = useState([]);
-  const [alert, setAlert] = React.useState(false);
-  useEffect(() => {
-    HandleDatesSet()
+  const [datereport, setDatereport] = React.useState([]);
+  React.useEffect(() => {
+    getApi();
   }, []);
-  const onClick = () => {
-   setAlert(true);
-  }
-  const HandleDatesSet = () => {
+  const getApi = (e) => {
     axios
-      .get(`${process.env.REACT_APP_API_KEY}/getDate`)
+      .get(`${process.env.REACT_APP_API_KEY}/stamp`)
       .then((res) => {
         console.log(res.data);
-        setDate(res.data);
+        setDatereport(res.data.data);
       })
       .catch((err) => console.log(err));
   };
-  return (
-    <section>
-      <FullCalendar
-      ref={calendarRef}
-        events={date}
-        dateClick={onClick}
-        plugins={[dayGridPlugin,interactionPlugin]}
-        initialView="dayGridMonth"
-        locale={esLocale}
-        datesSet={(date)=>HandleDatesSet(date)}
-      />
-            {alert ? (
-        <h1>hello</h1>
-      ) : (
-        <></>
-      )}
-    </section>
-  );
+  const dateElement = datereport.map((date) => {
+    if (date === null) {
+      return <h1>ยังไม่มีข้อมูล</h1>;
+    } else {
+      return <h3 key={date.employess._id}>{date.employess[0].name}</h3>;
+    }
+  });
+  return <div>{dateElement}</div>;
 }
 
 /* HIPGlobal

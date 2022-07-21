@@ -24,14 +24,21 @@ function Reportbase() {
   const [CategoryList, setCategoryList] = React.useState([]);
   const [Count, setCount] = React.useState([]);
   const [Distince, setDistince] = React.useState([]);
+  const [items, setItems] = React.useState([]);
+  const [Employess, setEmployess] = React.useState([]);
   React.useEffect(() => {
+    const items = localStorage.getItem("Companyid");
+    if (items) {
+      setItems(items);
+     }
     handleChange()
     notstamp()
     getDistince()
+    countEmployees()
   }, []);
-  const handleChange = () => {
+  const handleChange = async () => {
 
-    axios
+    await axios
       .get(`${process.env.REACT_APP_API_KEY}/getattendance`)
 
       .then((res) => {
@@ -40,9 +47,9 @@ function Reportbase() {
       })
       .catch((err) => console.log(err));
   };
-  const notstamp = () => {   //เช็คคนยังไม่แสดกน
+  const notstamp = async () => {   //เช็คคนยังไม่แสดกน
 
-    axios
+    await axios
       .get(`${process.env.REACT_APP_API_KEY}/notstamp`)
 
       .then((res) => {
@@ -51,13 +58,22 @@ function Reportbase() {
       })
       .catch((err) => console.log(err));
   };
-  const getDistince = () => {   //เช็คจำนวนคนแสกนนิ้ว
+  const getDistince = async () => {   //เช็คจำนวนคนแสกนนิ้ว
 
-    axios
+    await axios
       .get(`${process.env.REACT_APP_API_KEY}/distinct`)
       .then((res) => {
         console.log('getDistince',res.data);
         setDistince(res.data);
+      })
+      .catch((err) => console.log(err));
+  };
+  const countEmployees = async () => {   //เช็คจำนวนพนักงาน
+    await axios
+      .get(`${process.env.REACT_APP_API_KEY}/countEmployees`)
+      .then((res) => {
+        console.log('Employess',res.data.count);
+        setEmployess(res.data.count);
       })
       .catch((err) => console.log(err));
   };
@@ -70,17 +86,17 @@ function Reportbase() {
         <React.Fragment>
           <CardContent>
             <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
-             HIPGLOBAL
+             {items}
             </Typography>
             <Typography variant="h5" component="div">
               เวลาทำงาน 08.00 - 17.00
             </Typography>
             <hr></hr>
 
-            <Chart handleChange={CategoryList} notstamp={Count} getDistince={Distince}/>
+            <Chart handleChange={CategoryList} notstamp={Count} getDistince={Distince}  countEmployees={Employess}/>
             <Tablereport />
   
-            <Typography variant="h5">ยังไม่สแกน 1 คน</Typography>
+            <Typography variant="h5">ยังไม่สแกน {Count.count} คน</Typography>
             <Noattendance />
           </CardContent>
           <CardContent>
