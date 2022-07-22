@@ -89,7 +89,7 @@ export default function Tablereport() {
 
           <TableBody>
             {CategoryList.map((row) => (
-              <TableRow align="center" key={row.employess._id}>
+              <TableRow align="center" key={row.employess.anSEnrollNumber}>
                 <TableCell align="center">
                   {row.employess[0].anSEnrollNumber}
                 </TableCell>

@@ -61,7 +61,7 @@ function Reportbase() {
   const getDistince = async () => {   //เช็คจำนวนคนแสกนนิ้ว
 
     await axios
-      .get(`${process.env.REACT_APP_API_KEY}/distinct`)
+      .get(`${process.env.REACT_APP_API_KEY}/stamp`)
       .then((res) => {
         console.log('getDistince',res.data);
         setDistince(res.data);

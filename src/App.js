@@ -11,7 +11,7 @@ function App() {
     <Routes >
          <Route exact path="/" element={<SignIn/>} />
          <Route exact path="/report" element={<Report/>} />
-         <Route exact path="/monthreport" element={<MonthReport/>} />
+         <Route path="/monthreport/:id" element={<MonthReport/>} />
     </Routes>
   );
 }
