@@ -13,7 +13,7 @@ export default function Calendar() {
   }, []);
   const getApi = (e) => {
     axios
-      .get(`${process.env.REACT_APP_API_KEY}/stamp`)
+      .get(`${process.env.REACT_APP_API_KEY}/employees`)
       .then((res) => {
         console.log(res.data);
         setDatereport(res.data.data);
@@ -24,7 +24,7 @@ export default function Calendar() {
     if (date === null) {
       return <h1>ยังไม่มีข้อมูล</h1>;
     } else {
-      return <h3 key={date.employess._id}>{date.employess[0].name}</h3>;
+      return <h3 key={date.Badgenumber}>{date.Name}</h3>;
     }
   });
   return <div>{dateElement}</div>;

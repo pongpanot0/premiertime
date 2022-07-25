@@ -27,7 +27,7 @@ function Reportbase() {
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
   React.useEffect(() => {
-    const items = localStorage.getItem("Companyid");
+    const items = localStorage.getItem("company_name");
     if (items) {
       setItems(items);
      }
@@ -70,7 +70,7 @@ function Reportbase() {
   };
   const countEmployees = async () => {   //เช็คจำนวนพนักงาน
     await axios
-      .get(`${process.env.REACT_APP_API_KEY}/countEmployees`)
+      .get(`${process.env.REACT_APP_API_KEY}/employees`)
       .then((res) => {
         console.log('Employess',res.data.count);
         setEmployess(res.data.count);

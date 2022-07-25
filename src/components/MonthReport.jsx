@@ -29,29 +29,7 @@ export default function MonthReport() {
   };
   const dateElement = atten.map((row, i) => {
     console.log(row);
-    if (row.log.length === 0) {
-      return (
-        <Accordion expanded={expanded === i} onChange={handleChange(i)}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1bh-content"
-            id="panel1bh-header"
-          >
-            <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              {row._id.name}
-            </Typography>
-
-            <Typography sx={{ color: "text.secondary" }}>
-              I am an accordion
-            </Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>ไม่มีข้อมูล</Typography>
-          </AccordionDetails>
-        </Accordion>
-      );
-    }
-    if (row.log.length !== 0) {
+    if (row) {
       console.log(row);
       return (
         <Accordion expanded={expanded === i} onChange={handleChange(i)}>
@@ -61,7 +39,7 @@ export default function MonthReport() {
             id="panel1bh-header"
           >
             <Typography sx={{ width: "33%", flexShrink: 0 }}>
-              {row._id.name}
+              {row.Name}
             </Typography>
 
             <Typography sx={{ color: "text.secondary" }}>

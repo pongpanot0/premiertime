@@ -47,13 +47,16 @@ export default function SignIn() {
       email:email,
       password:password
     }).then((res)=>{
-
+      console.log(res)
       if(res.data.status == 200) {
         setAlert(true);
         localStorage.setItem('token',res.data.token)
-        localStorage.setItem('Companyid',res.data.user.recordset[0].CompanyID)
+        localStorage.setItem('Companyid',res.data.user[0].Companyid)
+        localStorage.setItem('user_id',res.data.user[0].user_id)
+        localStorage.setItem('company_name',res.data.user[0].company_name)
+        
         window.location ='/report'
-        setIsLoggedin(true);
+        setIsLoggedin(true); 
       } else {
         setAlert(true);
       }

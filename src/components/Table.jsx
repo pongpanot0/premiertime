@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import TablePagination from "@mui/material/TablePagination";
-
+import moment from 'moment'
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
@@ -41,6 +41,43 @@ export default function Tablereport() {
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
+
+
+  const dateElement = CategoryList.map((row) => {
+    const current = ("17:30").replace(":", "")
+    console.log(current)
+    const time = (row.last.time).replace(":", "")
+    console.log(time)
+
+    if(time < current){
+      return (
+        <TableBody>
+          <TableRow align="center" key={row.Badgenumber}>
+            <TableCell align="center">{row.Badgenumber}</TableCell>
+            <TableCell align="center">{row.Name}</TableCell>
+            <TableCell align="center">{row.street}</TableCell>
+            <TableCell align="center">{row.start.time}</TableCell>
+            <TableCell align="center"></TableCell>
+          </TableRow>
+        </TableBody>
+      );
+    }
+    if(time > current || time === current){
+      return (
+        <TableBody>
+          <TableRow align="center" key={row.Badgenumber}>
+            <TableCell align="center">{row.Badgenumber}</TableCell>
+            <TableCell align="center">{row.Name}</TableCell>
+            <TableCell align="center">{row.street}</TableCell>
+            <TableCell align="center">{row.start.time}</TableCell>
+            <TableCell align="center">{row.last.time}</TableCell>
+          </TableRow>
+        </TableBody>
+      );
+    }
+    console.log(row.last.time)
+ 
+  });
 
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -81,28 +118,10 @@ export default function Tablereport() {
               <TableCell align="center">แผนก</TableCell>
               <TableCell align="center">เข้า</TableCell>
               <TableCell align="center">ออก</TableCell>
-              <TableCell align="center" style={{ paddingleft: "5px" }}>
-                ดูประวัติย้อนหลัง
-              </TableCell>
             </TableRow>
           </TableHead>
 
-          <TableBody>
-            {CategoryList.map((row) => (
-              <TableRow align="center" key={row.employess.anSEnrollNumber}>
-                <TableCell align="center">
-                  {row.employess[0].anSEnrollNumber}
-                </TableCell>
-                <TableCell align="center">{row.employess[0].name}</TableCell>
-                <TableCell align="center">
-                  {row.employess[0].organize}
-                </TableCell>
-                <TableCell align="center">{row.start.time}</TableCell>
-                <TableCell align="center">{row.last.time}</TableCell>
-                <TableCell align="center">ดูประวัติย้อนหลัง</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+          {dateElement}
         </Table>
       </TableContainer>
       <TablePagination
