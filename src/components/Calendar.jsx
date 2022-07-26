@@ -15,7 +15,7 @@ export default function Calendar() {
     axios
       .get(`${process.env.REACT_APP_API_KEY}/employees`)
       .then((res) => {
-        console.log(res.data);
+
         setDatereport(res.data.data);
       })
       .catch((err) => console.log(err));

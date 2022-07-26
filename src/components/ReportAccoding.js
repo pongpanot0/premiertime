@@ -28,12 +28,12 @@ export default function ReportAccoding() {
       setItems(items);
     }
     axios.get(`${process.env.REACT_APP_API_KEY}/monthReport`).then((res) => {
-      console.log(res.data.data)
+
       setMonthReport(res.data.data);
     });
   }, []);
   const dateElement = monthReport.map((date, i) => {
-    console.log(date);
+
     if (date === null) {
       return <h1>ยังไม่มีข้อมูล</h1>;
     } else {

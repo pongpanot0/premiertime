@@ -47,14 +47,14 @@ export default function SignIn() {
       email:email,
       password:password
     }).then((res)=>{
-      console.log(res)
+
       if(res.data.status == 200) {
         setAlert(true);
         localStorage.setItem('token',res.data.token)
         localStorage.setItem('Companyid',res.data.user[0].Companyid)
         localStorage.setItem('user_id',res.data.user[0].user_id)
         localStorage.setItem('company_name',res.data.user[0].company_name)
-        
+        localStorage.setItem('name',res.data.user[0].name)
         window.location ='/report'
         setIsLoggedin(true); 
       } else {
@@ -70,10 +70,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
   };
   const logoutTimerIdRef = React.useRef(null);
 

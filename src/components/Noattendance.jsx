@@ -66,7 +66,7 @@ export default function Noattendance() {
       setItems(items);
     }
     axios.get(`${process.env.REACT_APP_API_KEY}/notstamp`).then((res) => {
-      console.log(res.data);
+
       setnotAtten(res.data.data);
     });
   }, []);

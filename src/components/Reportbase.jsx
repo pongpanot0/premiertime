@@ -27,52 +27,47 @@ function Reportbase() {
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
   React.useEffect(() => {
-    const items = localStorage.getItem("company_name");
-    if (items) {
-      setItems(items);
-     }
-    handleChange()
-    notstamp()
-    getDistince()
-    countEmployees()
+    const items = localStorage.getItem("name");
+    handleChange();
+    notstamp();
+    getDistince();
+    countEmployees();
   }, []);
   const handleChange = async () => {
-
     await axios
       .get(`${process.env.REACT_APP_API_KEY}/getattendance`)
 
       .then((res) => {
-        console.log('handleChange',res.data.data);
         setCategoryList(res.data.data);
       })
       .catch((err) => console.log(err));
   };
-  const notstamp = async () => {   //เช็คคนยังไม่แสดกน
+  const notstamp = async () => {
+    //เช็คคนยังไม่แสดกน
 
     await axios
       .get(`${process.env.REACT_APP_API_KEY}/notstamp`)
 
       .then((res) => {
-        console.log('notstamp',res.data);
         setCount(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const getDistince = async () => {   //เช็คจำนวนคนแสกนนิ้ว
+  const getDistince = async () => {
+    //เช็คจำนวนคนแสกนนิ้ว
 
     await axios
-      .get(`${process.env.REACT_APP_API_KEY}/stamp`)
+      .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}`)
       .then((res) => {
-        console.log('getDistince',res.data);
         setDistince(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const countEmployees = async () => {   //เช็คจำนวนพนักงาน
+  const countEmployees = async () => {
+    //เช็คจำนวนพนักงาน
     await axios
       .get(`${process.env.REACT_APP_API_KEY}/employees`)
       .then((res) => {
-        console.log('Employess',res.data.count);
         setEmployess(res.data.count);
       })
       .catch((err) => console.log(err));
@@ -86,16 +81,21 @@ function Reportbase() {
         <React.Fragment>
           <CardContent>
             <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
-             {items}
+              {items}
             </Typography>
             <Typography variant="h5" component="div">
               เวลาทำงาน 08.00 - 17.00
             </Typography>
             <hr></hr>
 
-            <Chart handleChange={CategoryList} notstamp={Count} getDistince={Distince}  countEmployees={Employess}/>
+            <Chart
+              handleChange={CategoryList}
+              notstamp={Count}
+              getDistince={Distince}
+              countEmployees={Employess}
+            />
             <Tablereport />
-  
+
             <Typography variant="h5">ยังไม่สแกน {Count.count} คน</Typography>
             <Noattendance />
           </CardContent>
