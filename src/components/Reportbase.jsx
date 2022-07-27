@@ -25,35 +25,43 @@ function Reportbase() {
   const [Distince, setDistince] = React.useState([]);
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
+  const [set, Setset] = React.useState([]);
   React.useEffect(() => {
     const items = localStorage.getItem("name");
-      setItems(items);
+    setItems(items);
     getDistince();
     notstamp();
     countEmployees();
+    setting();
   }, [items]);
-
-  const notstamp =  () => {
-
+  const setting = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
+      .then((res) => {
+        Setset(res.data.data[0]);
+      })
+      .catch((err) => console.log(err));
+  };
+  const notstamp = () => {
     //เช็คคนยังไม่แสดกน
-     axios
+    axios
       .get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`)
       .then((res) => {
         setCount(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const getDistince =  () => {
-     axios
+  const getDistince = () => {
+    axios
       .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}`)
       .then((res) => {
         setDistince(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const countEmployees =  () => {
+  const countEmployees = () => {
     //เช็คจำนวนพนักงาน
-     axios
+    axios
       .get(`${process.env.REACT_APP_API_KEY}/employees/${items}`)
       .then((res) => {
         console.log(res);
@@ -73,7 +81,7 @@ function Reportbase() {
               {items}
             </Typography>
             <Typography variant="h5" component="div">
-              เวลาทำงาน 08.00 - 17.00
+              เวลาทำงาน {set.Inwork} -{set.Outwork}
             </Typography>
             <hr></hr>
 
@@ -84,7 +92,7 @@ function Reportbase() {
             />
             <Tablereport />
 
-            <Typography variant="h5">ยังไม่สแกน {Count.count} คน</Typography>
+            <Typography variant="h5"> ยังไม่สแกน {Count.count} คน</Typography>
             <Noattendance />
           </CardContent>
           <CardContent>

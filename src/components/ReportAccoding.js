@@ -54,19 +54,6 @@ export default function ReportAccoding() {
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>ดูข้อมูลเข้าออกย้อนหลัง</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Calendar />
-        </AccordionDetails>
-      </Accordion>
-      <hr></hr>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
