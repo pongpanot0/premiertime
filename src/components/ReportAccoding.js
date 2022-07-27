@@ -23,24 +23,26 @@ export default function ReportAccoding() {
   const [items, setItems] = React.useState("");
 
   React.useEffect(() => {
-    const items = localStorage.getItem("Companyid");
+    const items = localStorage.getItem("name");
     if (items) {
       setItems(items);
     }
-    axios.get(`${process.env.REACT_APP_API_KEY}/monthReport`).then((res) => {
-
+    axios.get(`${process.env.REACT_APP_API_KEY}/monthReport/${items}`).then((res) => {
       setMonthReport(res.data.data);
     });
   }, []);
   const dateElement = monthReport.map((date, i) => {
-
     if (date === null) {
       return <h1>ยังไม่มีข้อมูล</h1>;
     } else {
       return (
         <List sx={style} component="nav" aria-label="mailbox folders">
-          <ListItem button component={Link} to={`/monthreport/${date._id.monthReport}`} >
-            <ListItemText key={i}  primary={date._id.month} />
+          <ListItem
+            button
+            component={Link}
+            to={`/monthreport/${date._id.monthReport}`}
+          >
+            <ListItemText key={i} primary={date._id.month} />
           </ListItem>
           <Divider />
         </List>

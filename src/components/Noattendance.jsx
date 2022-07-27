@@ -15,6 +15,8 @@ const style = {
   bgcolor: "background.paper",
 };
 export default function Noattendance() {
+
+
   const [atten, setnotAtten] = React.useState([].slice(0, 10));
   const [pageNumber, setPageNumber] = React.useState(0);
   const usersPerPage = 10;
@@ -42,9 +44,9 @@ export default function Noattendance() {
                         variant="body2"
                         color="text.primary"
                       >
-                       แผนก : {date.street}
+                       แผนก : {date.Depname}
                       </Typography>
-                      <br></br> รหัสพนักงาน : {date.Badgenumber}
+                      <br></br> รหัสพนักงาน : {date.Enrollnumber}
                     </React.Fragment>
                   }
                 />
@@ -61,12 +63,12 @@ export default function Noattendance() {
 
   const [items, setItems] = React.useState("");
   React.useEffect(() => {
-    const items = localStorage.getItem("Companyid");
+    const items = localStorage.getItem("name");
     if (items) {
       setItems(items);
     }
-    axios.get(`${process.env.REACT_APP_API_KEY}/notstamp`).then((res) => {
-
+    axios.get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`).then((res) => {
+      console.log(items)
       setnotAtten(res.data.data);
     });
   }, []);

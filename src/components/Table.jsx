@@ -42,26 +42,21 @@ export default function Tablereport() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const handleChangePage = (event, newPage: number) => {
+  const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
 
   const dateElement = CategoryList.map((row) => {
-    console.log(row.start)
-
     const current = ("17:30").replace(":", "")
-
     const time = ("17:30").replace(":", "")
-
-
     if(row.start === undefined){
       return (
         <TableBody>
           <TableRow align="center" key={row.Badgenumber}>
             <TableCell align="center">{row.Enrollnumber}</TableCell>
             <TableCell align="center">{row.Name}</TableCell>
-            <TableCell align="center">{row.Name}</TableCell>
+            <TableCell align="center">{row.Depname}</TableCell>
             <TableCell align="center"></TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
@@ -74,7 +69,7 @@ export default function Tablereport() {
           <TableRow align="center" key={row.Badgenumber}>
             <TableCell align="center">{row.Enrollnumber}</TableCell>
             <TableCell align="center">{row.Name}</TableCell>
-            <TableCell align="center">{row.Name}</TableCell>
+            <TableCell align="center">{row.Depname}</TableCell>
             <TableCell align="center">{row.start.time}</TableCell>
             <TableCell align="center">{row.last.time}</TableCell>
           </TableRow>

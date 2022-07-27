@@ -27,12 +27,12 @@ export default function MonthReport() {
   const usersPerPage = 10;
   const pagesVisited = pageNumber * usersPerPage;
   React.useEffect(() => {
-    const items = localStorage.getItem("Companyid");
+    const items = localStorage.getItem("name");
     if (items) {
       setItems(items);
     }
     axios
-      .get(`${process.env.REACT_APP_API_KEY}/exportdate/${id}`)
+      .get(`${process.env.REACT_APP_API_KEY}/exportdate/${id}/${items}`)
       .then((res) => {
         setnotAtten(res.data.data);
       });
@@ -57,12 +57,12 @@ export default function MonthReport() {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
             >
-              <Typography key={row.USERID} sx={{ width: "33%", flexShrink: 0 }}>
+              <Typography key={row.USERID} sx={{ width: "50%", flexShrink: 0 }}>
                 {row.Name}
               </Typography>
 
-              <Typography sx={{ color: "text.primary" }}>
-                {row.street}
+              <Typography sx={{ color: "text.secondary" }}>
+              แผนก {row.Depname}
               </Typography>
             </AccordionSummary>
             <AccordionDetails></AccordionDetails>
@@ -78,12 +78,12 @@ export default function MonthReport() {
               aria-controls="panel1bh-content"
               id="panel1bh-header"
             >
-              <Typography key={row.USERID} sx={{ width: "33%", flexShrink: 0 }}>
+              <Typography key={row.USERID} sx={{ width: "50%", flexShrink: 0 }}>
                 {row.Name}
               </Typography>
 
-              <Typography sx={{ color: "text.primary" }}>
-                {row.street}
+              <Typography sx={{ color: "text.secondary" }}>
+                แผนก {row.Depname}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>

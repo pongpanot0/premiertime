@@ -21,53 +21,42 @@ const bull = (
 );
 
 function Reportbase() {
-  const [CategoryList, setCategoryList] = React.useState([]);
   const [Count, setCount] = React.useState([]);
   const [Distince, setDistince] = React.useState([]);
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
   React.useEffect(() => {
     const items = localStorage.getItem("name");
-    handleChange();
-    notstamp();
+      setItems(items);
     getDistince();
+    notstamp();
     countEmployees();
-  }, []);
-  const handleChange = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_KEY}/getattendance`)
+  }, [items]);
 
-      .then((res) => {
-        setCategoryList(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
-  const notstamp = async () => {
+  const notstamp =  () => {
+
     //เช็คคนยังไม่แสดกน
-
-    await axios
-      .get(`${process.env.REACT_APP_API_KEY}/notstamp`)
-
+     axios
+      .get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`)
       .then((res) => {
         setCount(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const getDistince = async () => {
-    //เช็คจำนวนคนแสกนนิ้ว
-
-    await axios
+  const getDistince =  () => {
+     axios
       .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}`)
       .then((res) => {
         setDistince(res.data);
       })
       .catch((err) => console.log(err));
   };
-  const countEmployees = async () => {
+  const countEmployees =  () => {
     //เช็คจำนวนพนักงาน
-    await axios
-      .get(`${process.env.REACT_APP_API_KEY}/employees`)
+     axios
+      .get(`${process.env.REACT_APP_API_KEY}/employees/${items}`)
       .then((res) => {
+        console.log(res);
         setEmployess(res.data.count);
       })
       .catch((err) => console.log(err));
@@ -89,7 +78,6 @@ function Reportbase() {
             <hr></hr>
 
             <Chart
-              handleChange={CategoryList}
               notstamp={Count}
               getDistince={Distince}
               countEmployees={Employess}

@@ -13,10 +13,11 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 
-export default function Example({ handleChange, notstamp, getDistince,countEmployees }) {
-
+export default function Example({ notstamp, getDistince, countEmployees }) {
+  console.log(getDistince.count);
+  console.log(notstamp.count);
   const data = [
-    { name: "เข้างานแล้ว", value: getDistince.count},
+    { name: "เข้างานแล้ว", value: getDistince.count },
     { name: "ยังไม่เข้างาน", value: notstamp.count },
   ];
 
