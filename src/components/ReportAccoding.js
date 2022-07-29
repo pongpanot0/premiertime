@@ -15,7 +15,6 @@ import { Route, Routes, Link } from "react-router-dom";
 export default function ReportAccoding() {
   const style = {
     width: "100%",
-    maxWidth: 360,
     bgcolor: "background.paper",
   };
 
@@ -42,7 +41,7 @@ export default function ReportAccoding() {
             component={Link}
             to={`/monthreport/${date._id.monthReport}`}
           >
-            <ListItemText key={i} primary={date._id.month} />
+            <ListItemText key={i} primary={date._id.month.replace(":", "/")} />
           </ListItem>
           <Divider />
         </List>
