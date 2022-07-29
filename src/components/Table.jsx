@@ -7,7 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
+import { Pagination } from "@mui/material";
 import TableSortLabel from "@material-ui/core/TableSortLabel";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
@@ -18,7 +18,7 @@ export default function Tablereport() {
   const [CategoryList, setCategoryList] = useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [items, setItems] = React.useState("");
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState(0);
   const [offset,setOffset] = React.useState(0)
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export default function Tablereport() {
 
 
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    setOffset(1+ page * rowsPerPage, page * rowsPerPage + rowsPerPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
