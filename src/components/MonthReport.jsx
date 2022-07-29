@@ -25,6 +25,7 @@ export default function MonthReport() {
   const [atten, setnotAtten] = React.useState([].slice(0, 10));
   const [pageNumber, setPageNumber] = React.useState(0);
   const usersPerPage = 10;
+  const [set, Setset] = React.useState([]);
   const pagesVisited = pageNumber * usersPerPage;
   React.useEffect(() => {
     const items = localStorage.getItem("name");
@@ -35,13 +36,22 @@ export default function MonthReport() {
       .get(`${process.env.REACT_APP_API_KEY}/exportdate/${id}/${items}`)
       .then((res) => {
         setnotAtten(res.data.data);
+        console.log(res.data);
       });
+    setting();
   }, []);
   const pageCount = Math.ceil(atten.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
-
+  const setting = () => {
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
+      .then((res) => {
+        Setset(res.data.data[0]);
+      })
+      .catch((err) => console.log(err));
+  };
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -62,7 +72,7 @@ export default function MonthReport() {
               </Typography>
 
               <Typography sx={{ color: "text.secondary" }}>
-              แผนก {row.Depname}
+                แผนก {row.Depname}
               </Typography>
             </AccordionSummary>
             <AccordionDetails></AccordionDetails>
@@ -70,6 +80,9 @@ export default function MonthReport() {
         );
       }
       if (row.start !== undefined) {
+        const sum = row.start[0].map(datum => datum.late).reduce((a, b) => a + b)
+        const total=(row.start.reduce((total,currentItem) =>  total = total + currentItem.late , 0 ));
+        console.log(sum)
         console.log(row.start);
         return (
           <Accordion expanded={expanded === i} onChange={handleChange(i)}>
@@ -89,30 +102,60 @@ export default function MonthReport() {
             <AccordionDetails>
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="caption table">
-                  <caption>จำนวนการแสกนนิ้ว : {row.scan} วัน</caption>
+                  
+                  <caption>
+                    จำนวนการแสกนนิ้ว : {row.scan} วัน สายรวมกันทั้งหมด {sum} นาที
+                  </caption>
                   <TableHead>
                     <TableRow>
                       <TableCell align="center">วันที่</TableCell>
                       <TableCell align="center">เวลาที่แสกนเข้า</TableCell>
                       <TableCell align="center">เวลาที่แสกนออก</TableCell>
+                      <TableCell align="center">เข้างานสาย</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {row.start[0].map((res) => {
+                      if(res.late === null){
+                        return (
+                          <TableRow key={row.USERID}>
+                            <TableCell align="center" component="th" scope="row">
+                              {res._id}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {res.start}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {res.last}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
+                      if(res.late !== null){
+                        console.log(res)
+
+                        return (
+                          <TableRow key={row.USERID}>
+                            <TableCell align="center" component="th" scope="row">
+                              {res._id}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {res.start}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {res.last}
+                            </TableCell>
+                            <TableCell align="center" component="th" scope="row">
+                              {res.late} นาที
+                            </TableCell>
+                          </TableRow>
+                        );
+                      }
                       console.log(res);
-                      return (
-                        <TableRow key={row.USERID}>
-                          <TableCell align="center" component="th" scope="row">
-                            {res._id}
-                          </TableCell>
-                          <TableCell align="center" component="th" scope="row">
-                            {res.start}
-                          </TableCell>
-                          <TableCell align="center" component="th" scope="row">
-                            {res.last}
-                          </TableCell>
-                        </TableRow>
-                      );
+                
                     })}
                   </TableBody>
                 </Table>

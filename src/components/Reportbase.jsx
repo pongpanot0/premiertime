@@ -26,6 +26,8 @@ function Reportbase() {
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
   const [set, Setset] = React.useState([]);
+  const [limit,setLimit] = React.useState(100000)
+  const [offset,setOffset] = React.useState(5)
   React.useEffect(() => {
     const items = localStorage.getItem("name");
     setItems(items);
@@ -53,8 +55,9 @@ function Reportbase() {
   };
   const getDistince = () => {
     axios
-      .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}`)
+      .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}/${limit}/${offset}`)
       .then((res) => {
+        console.log(res)
         setDistince(res.data);
       })
       .catch((err) => console.log(err));
@@ -90,7 +93,7 @@ function Reportbase() {
               getDistince={Distince}
               countEmployees={Employess}
             />
-            <Tablereport />
+            <Tablereport  setting={set}/>
 
             <Typography variant="h5"> ยังไม่สแกน {Count.count} คน</Typography>
             <Noattendance />

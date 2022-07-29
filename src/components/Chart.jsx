@@ -14,10 +14,10 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 
 export default function Example({ notstamp, getDistince, countEmployees }) {
-  console.log(getDistince.count);
+  console.log(getDistince);
   console.log(notstamp.count);
   const data = [
-    { name: "เข้างานแล้ว", value: getDistince.count },
+    { name: "เข้างานแล้ว", value: getDistince.count3 },
     { name: "ยังไม่เข้างาน", value: notstamp.count },
   ];
 
@@ -89,7 +89,7 @@ export default function Example({ notstamp, getDistince, countEmployees }) {
         <Grid item xs={12} sm={12} md={12}>
           <Item>
             <Typography>จำนวนพนักงานทั้งหมด : {countEmployees}</Typography>
-            <Typography>เข้างานแล้ว : {getDistince.count}</Typography>
+            <Typography>เข้างานแล้ว : {getDistince.count3}</Typography>
             <Typography>ยังไม่เข้างาน : {notstamp.count}</Typography>
           </Item>
         </Grid>
