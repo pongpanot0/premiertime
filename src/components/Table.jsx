@@ -13,33 +13,35 @@ import TextField from "@mui/material/TextField";
 import axios from "axios";
 
 export default function Tablereport() {
-  const [number,setNumber] = useState([])
+  const [number, setNumber] = useState([]);
   const [searchedVal, setSearchedVal] = useState("");
   const [CategoryList, setCategoryList] = useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [items, setItems] = React.useState("");
-  const [page, setPage] = React.useState(1);
-  const [offset,setOffset] = React.useState(0)
+  const [page, setPage] = React.useState(0);
+  const [offset, setOffset] = React.useState(0);
 
   useEffect(() => {
     const items = localStorage.getItem("name");
     if (items) {
       setItems(items);
       axios
-        .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}/${rowsPerPage}/${offset}`)
+        .get(
+          `${process.env.REACT_APP_API_KEY}/stamp/${items}/${rowsPerPage}/${offset}`
+        )
         .then((res) => {
           console.log(res.data.data);
           setCategoryList(res.data.data);
-          setNumber(parseInt(res.data.count3))
+          setNumber(parseInt(res.data.count3));
         })
         .catch((err) => console.log(err));
     }
-  }, [rowsPerPage, items,offset]);
-
-
+  }, [rowsPerPage, items, offset]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    setOffset(5 + page * offset);
+    console.log(offset);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -47,9 +49,7 @@ export default function Tablereport() {
     setPage(0);
   };
 
-
   // Avoid a layout jump when reaching the last page with empty rows.
-
 
   const [orderDirection, setOrderDirection] = React.useState("asc");
   const [orderDirection2, setOrderDirection2] = React.useState("asc");
@@ -159,7 +159,7 @@ export default function Tablereport() {
     setCategoryList(sortArray(CategoryList, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
-  const dateElement = CategoryList.map((row,index) => {
+  const dateElement = CategoryList.map((row, index) => {
     const current = "17:30".replace(":", "");
     const time = "17:30".replace(":", "");
     if (row.start === undefined) {
