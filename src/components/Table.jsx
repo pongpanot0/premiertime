@@ -18,7 +18,7 @@ export default function Tablereport() {
   const [CategoryList, setCategoryList] = useState([]);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [items, setItems] = React.useState("");
-  const [page, setPage] = React.useState(0);
+  const [page, setPage] = React.useState(1);
   const [offset,setOffset] = React.useState(0)
 
   useEffect(() => {
@@ -34,12 +34,12 @@ export default function Tablereport() {
         })
         .catch((err) => console.log(err));
     }
-  }, [rowsPerPage, items,page,offset]);
+  }, [rowsPerPage, items,offset]);
 
 
 
-  const handleChangePage = (event, value) => {
-    setPage(0);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -159,7 +159,7 @@ export default function Tablereport() {
     setCategoryList(sortArray(CategoryList, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
-  const dateElement = CategoryList.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,index) => {
+  const dateElement = CategoryList.map((row,index) => {
     const current = "17:30".replace(":", "");
     const time = "17:30".replace(":", "");
     if (row.start === undefined) {
