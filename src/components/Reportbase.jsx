@@ -26,25 +26,29 @@ function Reportbase() {
   const [items, setItems] = React.useState([]);
   const [Employess, setEmployess] = React.useState([]);
   const [set, Setset] = React.useState([]);
-  const [limit,setLimit] = React.useState(100000)
-  const [offset,setOffset] = React.useState(5)
+  const [limit, setLimit] = React.useState(100000);
+  const [offset, setOffset] = React.useState(0);
   React.useEffect(() => {
-    const items = localStorage.getItem("name");
-    setItems(items);
+
+
     getDistince();
     notstamp();
     countEmployees();
     setting();
+
   }, [items]);
   const setting = () => {
+    const items = localStorage.getItem("name");
     axios
       .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
       .then((res) => {
         Setset(res.data.data[0]);
+        
       })
       .catch((err) => console.log(err));
   };
   const notstamp = () => {
+    const items = localStorage.getItem("name");
     //เช็คคนยังไม่แสดกน
     axios
       .get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`)
@@ -54,15 +58,17 @@ function Reportbase() {
       .catch((err) => console.log(err));
   };
   const getDistince = () => {
+    const items = localStorage.getItem("name");
     axios
       .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}/${limit}/${offset}`)
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setDistince(res.data);
       })
       .catch((err) => console.log(err));
   };
   const countEmployees = () => {
+    const items = localStorage.getItem("name");
     //เช็คจำนวนพนักงาน
     axios
       .get(`${process.env.REACT_APP_API_KEY}/employees/${items}`)
@@ -84,7 +90,7 @@ function Reportbase() {
               {items}
             </Typography>
             <Typography variant="h5" component="div">
-              เวลาทำงาน {set.Inwork} -{set.Outwork}
+              เวลาทำงาน {set.Inwork} -{set.Outwork} {items}
             </Typography>
             <hr></hr>
 
@@ -93,7 +99,7 @@ function Reportbase() {
               getDistince={Distince}
               countEmployees={Employess}
             />
-            <Tablereport  setting={set}/>
+            <Tablereport setting={set} />
 
             <Typography variant="h5"> ยังไม่สแกน {Count.count} คน</Typography>
             <Noattendance />

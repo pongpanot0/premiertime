@@ -45,6 +45,7 @@ export default function MonthReport() {
     setPageNumber(selected);
   };
   const setting = () => {
+    const items = localStorage.getItem("name");
     axios
       .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
       .then((res) => {
