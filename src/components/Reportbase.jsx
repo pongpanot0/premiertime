@@ -10,6 +10,7 @@ import Noattendance from "./Noattendance";
 import ReportAccoding from "./ReportAccoding";
 import Chart from "./Chart.jsx";
 import axios from "axios";
+import HideAppBar from "./Report";
 
 const bull = (
   <Box
@@ -79,7 +80,10 @@ function Reportbase() {
       .catch((err) => console.log(err));
   };
   return (
+
+      
     <Box sx={{ minWidth: 275 }}>
+
       <Card
         variant="outlined"
         style={{ border: "1px rounded black", borderRadius: "25px" }}
@@ -110,6 +114,7 @@ function Reportbase() {
         </React.Fragment>
       </Card>
     </Box>
+
   );
 }
 

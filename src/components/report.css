@@ -1,3 +1,12 @@
-Toolbar{
-    background-color: #034ea0;
+Toolbar {
+  background-color: #034ea0;
 }
+
+
+@media screen and (max-width: 768px) {
+    .css{
+        margin-left: auto; 
+        margin-right: 0;
+    }
+ 
+  }

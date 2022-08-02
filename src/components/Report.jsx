@@ -1,43 +1,27 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+
 import Typography from "@mui/material/Typography";
-import CssBaseline from "@mui/material/CssBaseline";
-import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
-import Slide from "@mui/material/Slide";
-import "./report.css";
-import Reportbase from "./Reportbase";
-import logo from "../ezLINE3.png";
-import { Button } from "@mui/material";
+import { styled, alpha } from "@mui/material/styles";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Reportbase from '../components/Reportbase'
+import './report.css'
+export default function HideAppBar() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-interface Props {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window?: () => Window;
-  children: React.ReactElement;
-}
-
-function HideOnScroll(props: Props) {
-  const { children, window } = props;
-  // Note that you normally won't need to set the window ref as useScrollTrigger
-  // will default to window.
-  // This is only being set here because the demo is in an iframe.
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
-
-  return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      {children}
-    </Slide>
-  );
-}
-
-export default function HideAppBar(props: Props) {
   const logout = () => {
     localStorage.removeItem("token");
     window.location = "/";
@@ -62,28 +46,62 @@ export default function HideAppBar(props: Props) {
     };
   }, []);
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <HideOnScroll {...props}>
-        <AppBar style={{ background: "#13499f" }}>
-          <Toolbar>
-            <Typography variant="h6" component="div">
-              <img src={logo} alt="" width="150" height="auto" />
-            </Typography>
-            <Button
-              onClick={logout}
-              style={{ color: "white", alignItems: "right" }}
-            >
-              Logout
-            </Button>
-          </Toolbar>
-        </AppBar>
-      </HideOnScroll>
-      <Toolbar />
-      <Container>
-        <br></br>
-        <Reportbase />
-      </Container>
-    </React.Fragment>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="relative">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="open drawer"
+            
+          ></IconButton>
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ flexGrow: 1, display: { sm: "block" } }}
+          >
+            MUI
+          </Typography>
+<div          className="css" >
+
+
+          <Button
+  
+            style={{ backgroundColor: "white" }}
+            id="demo-positioned-button"
+            aria-controls={open ? "demo-positioned-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleClick}
+          >
+            <MenuIcon />
+          </Button>
+          </div>
+          <Menu
+            color="white"
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
+            }}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+      <Reportbase />
+    </Box>
   );
 }

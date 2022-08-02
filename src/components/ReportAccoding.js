@@ -11,6 +11,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
+import "moment/locale/th";
 import { Route, Routes, Link } from "react-router-dom";
 export default function ReportAccoding() {
   const style = {
@@ -26,11 +27,14 @@ export default function ReportAccoding() {
     if (items) {
       setItems(items);
     }
-    axios.get(`${process.env.REACT_APP_API_KEY}/monthReport/${items}`).then((res) => {
-      setMonthReport(res.data.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/monthReport/${items}`)
+      .then((res) => {
+        setMonthReport(res.data.data);
+      });
   }, []);
   const dateElement = monthReport.map((date, i) => {
+    console.log(moment(date._id.month, "MM:YYYY").locale("th").format("LLL"));
     if (date === null) {
       return <h1>ยังไม่มีข้อมูล</h1>;
     } else {
@@ -39,9 +43,14 @@ export default function ReportAccoding() {
           <ListItem
             button
             component={Link}
-            to={`/monthreport/${date._id.monthReport}`}
-          >
-            <ListItemText key={i} primary={date._id.month.replace(":", "/")} />
+            to={`/monthreport/${date._id.monthReport}`}>
+            <ListItemText
+              key={i}
+              primary={moment(date._id.month, "MM:YYYY")
+                .locale("th")
+                .add(543, "year")
+                .format("MMMM yyyy")}
+            />
           </ListItem>
           <Divider />
         </List>
