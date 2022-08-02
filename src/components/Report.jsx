@@ -38,7 +38,6 @@ function HideOnScroll(props: Props) {
 }
 
 export default function HideAppBar(props: Props) {
-
   const logout = () => {
     localStorage.removeItem("token");
     window.location = "/";
@@ -47,7 +46,6 @@ export default function HideAppBar(props: Props) {
   const logoutTimerIdRef = React.useRef(null);
 
   React.useEffect(() => {
-
     const autoLogout = () => {
       if (document.visibilityState === "hidden") {
         const timeOutId = window.setTimeout(logout, 60 * 60 * 1000);
@@ -72,7 +70,12 @@ export default function HideAppBar(props: Props) {
             <Typography variant="h6" component="div">
               <img src={logo} alt="" width="150" height="auto" />
             </Typography>
-            {/*      <Button  onClick={logout} style={{ color: 'white' ,alignItems:'right'}}>Logout</Button> */}
+            <Button
+              onClick={logout}
+              style={{ color: "white", alignItems: "right" }}
+            >
+              Logout
+            </Button>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
