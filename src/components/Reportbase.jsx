@@ -30,13 +30,14 @@ function Reportbase() {
   const [limit, setLimit] = React.useState(100000);
   const [offset, setOffset] = React.useState(0);
   React.useEffect(() => {
-
-
+    const items = localStorage.getItem("name");
+    if (items) {
+      setItems(items);
+    }
     getDistince();
     notstamp();
     countEmployees();
     setting();
-
   }, [items]);
   const setting = () => {
     const items = localStorage.getItem("name");
@@ -44,7 +45,6 @@ function Reportbase() {
       .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
       .then((res) => {
         Setset(res.data.data[0]);
-        
       })
       .catch((err) => console.log(err));
   };
@@ -80,10 +80,7 @@ function Reportbase() {
       .catch((err) => console.log(err));
   };
   return (
-
-      
     <Box sx={{ minWidth: 275 }}>
-
       <Card
         variant="outlined"
         style={{ border: "1px rounded black", borderRadius: "25px" }}
@@ -114,7 +111,6 @@ function Reportbase() {
         </React.Fragment>
       </Card>
     </Box>
-
   );
 }
 

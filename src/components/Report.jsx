@@ -1,6 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-
+import { Route, Routes } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -10,8 +10,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Reportbase from '../components/Reportbase'
-import './report.css'
+import Reportbase from "../components/Reportbase";
+import "./report.css";
+import MonthReport from "./MonthReport";
 export default function HideAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -24,6 +25,10 @@ export default function HideAppBar() {
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("company_name");
+    localStorage.removeItem("name");
+    localStorage.removeItem("Companyid");
+    localStorage.removeItem("user_id");
     window.location = "/";
   };
 
@@ -54,7 +59,6 @@ export default function HideAppBar() {
             edge="start"
             color="inherit"
             aria-label="open drawer"
-            
           ></IconButton>
           <Typography
             variant="h6"
@@ -64,20 +68,17 @@ export default function HideAppBar() {
           >
             MUI
           </Typography>
-<div          className="css" >
-
-
-          <Button
-  
-            style={{ backgroundColor: "white" }}
-            id="demo-positioned-button"
-            aria-controls={open ? "demo-positioned-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClick}
-          >
-            <MenuIcon />
-          </Button>
+          <div className="css">
+            <Button
+              style={{ backgroundColor: "white" }}
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+            >
+              <MenuIcon />
+            </Button>
           </div>
           <Menu
             color="white"
@@ -95,13 +96,11 @@ export default function HideAppBar() {
               horizontal: "left",
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={logout}>Logout</MenuItem>
           </Menu>
         </Toolbar>
       </AppBar>
-      <Reportbase />
+<Reportbase/>
     </Box>
   );
 }

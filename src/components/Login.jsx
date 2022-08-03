@@ -6,17 +6,17 @@ import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import { NavLink } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import logo from '../HIP-logo-01.png'
-import axios from 'axios'
-import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
+import logo from "../HIP-logo-01.png";
+import axios from "axios";
+import Alert from "@mui/material/Alert";
+import CircularProgress from "@mui/material/CircularProgress";
 function Copyright(props) {
   return (
     <Typography
@@ -38,34 +38,33 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
-  const [email,setEmail] = React.useState("")
-  const [password,setPassword] = React.useState("")
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [alert, setAlert] = React.useState(false);
   const [isLoggedin, setIsLoggedin] = React.useState(false);
-  const Login = () =>{
-    axios.post(`${process.env.REACT_APP_API_KEY}/login`,{
-      email:email,
-      password:password
-    }).then((res)=>{
-
-      if(res.data.status == 200) {
-        setAlert(true);
-        localStorage.setItem('token',res.data.token)
-        localStorage.setItem('Companyid',res.data.user[0].Companyid)
-        localStorage.setItem('user_id',res.data.user[0].user_id)
-        localStorage.setItem('company_name',res.data.user[0].company_name)
-        localStorage.setItem('name',res.data.user[0].name)
-        window.location ='/report'
-        setIsLoggedin(true); 
-      } else {
-        setAlert(true);
-      }
-    })
-  }
+  const Login = () => {
+    axios
+      .post(`${process.env.REACT_APP_API_KEY}/login`, {
+        email: email,
+        password: password,
+      })
+      .then((res) => {
+        if (res.data.status == 200) {
+          setAlert(true);
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("user_id", res.data.user[0].user_id);
+          localStorage.setItem("name", res.data.user[0].name);
+          window.location = "/report";
+          setIsLoggedin(true);
+        } else {
+          setAlert(true);
+        }
+      });
+  };
   const logout = () => {
     localStorage.clear();
     setIsLoggedin(false);
-    window.location ='/'
+    window.location = "/";
   };
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -74,27 +73,30 @@ export default function SignIn() {
 
   React.useEffect(() => {
     const autoLogout = () => {
-      if (document.visibilityState === 'hidden') {
+      if (document.visibilityState === "hidden") {
         const timeOutId = window.setTimeout(logout, 1 * 1 * 1);
         logoutTimerIdRef.current = timeOutId;
       } else {
         window.clearTimeout(logoutTimerIdRef.current);
       }
     };
-  
-    document.addEventListener('visibilitychange', autoLogout);
-  
+
+    document.addEventListener("visibilitychange", autoLogout);
+
     return () => {
-      document.removeEventListener('visibilitychange', autoLogout);
+      document.removeEventListener("visibilitychange", autoLogout);
     };
   }, []);
   return (
-   
     <ThemeProvider theme={theme}>
-         {alert ? <Alert variant="filled" severity="success">
- Login Sucess
-</Alert> : <></> }
-   
+      {alert ? (
+        <Alert variant="filled" severity="success">
+          Login Sucess
+        </Alert>
+      ) : (
+        <></>
+      )}
+
       <Container component="main" maxWidth="xs" bgcolor="secondary.main">
         <CssBaseline />
         <Box
@@ -105,14 +107,13 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-         
-         <Avatar
-  alt="Remy Sharp"
-  src={logo}
-  sx={{ width: 156, height: 156,bgcolor: '#13499f' }}
-/>
+          <Avatar
+            alt="Remy Sharp"
+            src={logo}
+            sx={{ width: 156, height: 156, bgcolor: "#13499f" }}
+          />
 
-         <br></br>
+          <br></br>
           <Typography component="h1" variant="h5">
             เข้าสู่ระบบ
           </Typography>
@@ -131,9 +132,9 @@ export default function SignIn() {
               name="รหัสพนักงาน"
               autoComplete="รหัสพนักงาน"
               autoFocus
-              onChange={((e)=>{
-                setEmail(e.target.value)
-              })}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
             />
             <TextField
               margin="normal"
@@ -144,22 +145,20 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={((e)=>{
-                setPassword(e.target.value)
-              })}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
-           
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={Login}
-              >
-                เข้าสู่ระบบ
-              </Button>
 
-
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              onClick={Login}
+            >
+              เข้าสู่ระบบ
+            </Button>
           </Box>
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />

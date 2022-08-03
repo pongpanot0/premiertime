@@ -159,7 +159,8 @@ export default function Tablereport() {
     setCategoryList(sortArray(CategoryList, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
-  const dateElement = CategoryList.map((row, index) => {
+  const dateElement = CategoryList?.map((row, index) => {
+    console.log(row)
     const current = "17:30".replace(":", "");
     const time = "17:30".replace(":", "");
     if (row.start === undefined) {

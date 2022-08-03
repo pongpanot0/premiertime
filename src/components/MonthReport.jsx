@@ -20,6 +20,7 @@ import TableRow from "@mui/material/TableRow";
 import Menu from "@mui/material/Menu";
 import { Button } from "@material-ui/core";
 import MenuItem from "@mui/material/MenuItem";
+import HideAppBar from "./Report";
 export default function MonthReport() {
   const [expanded, setExpanded] = React.useState(false);
   const [items, setItems] = React.useState("");
@@ -131,6 +132,7 @@ export default function MonthReport() {
         console.log(sum);
         console.log(row.start);
         return (
+    
           <Accordion expanded={expanded === i} onChange={handleChange(i)}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
