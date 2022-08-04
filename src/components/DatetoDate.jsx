@@ -221,7 +221,10 @@ export default function DatetoDate() {
                               component="th"
                               scope="row"
                             >
-                              {res._id}
+                              {moment(res._id, "DD:MM:YYYY")
+                .locale("th")
+                .add(543, "year")
+                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"
@@ -255,7 +258,10 @@ export default function DatetoDate() {
                               component="th"
                               scope="row"
                             >
-                              {res._id}
+                             {moment(res._id, "DD:MM:YYYY")
+                .locale("th")
+                .add(543, "year")
+                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"

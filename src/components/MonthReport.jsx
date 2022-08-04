@@ -20,6 +20,7 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Button } from "@material-ui/core";
 import './report.css'
+import moment from "moment";
 import TextField from "@mui/material/TextField";
 import HideAppBar from "./Report";
 export default function MonthReport() {
@@ -134,6 +135,7 @@ export default function MonthReport() {
           .includes(searchedVal3.toString().toLowerCase())
     )
     .map((row, i) => {
+   
       if (row.start === undefined) {
         return (
           <Accordion expanded={expanded === i} onChange={handleChange(i)}>
@@ -194,6 +196,7 @@ export default function MonthReport() {
                   </TableHead>
                   <TableBody>
                     {row.start[0].map((res) => {
+                         console.log(res.id)
                       if (res.late === null) {
                         return (
                           <TableRow key={row.USERID}>
@@ -202,7 +205,10 @@ export default function MonthReport() {
                               component="th"
                               scope="row"
                             >
-                              {res._id}
+                             {moment(res._id, "DD:MM:YYYY")
+                .locale("th")
+                .add(543, "year")
+                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"
@@ -227,7 +233,7 @@ export default function MonthReport() {
                         );
                       }
                       if (res.late !== null) {
-                        console.log(res);
+                       
 
                         return (
                           <TableRow key={row.USERID}>
@@ -236,13 +242,17 @@ export default function MonthReport() {
                               component="th"
                               scope="row"
                             >
-                              {res._id}
+                            {moment(res._id, "DD:MM:YYYY")
+                .locale("th")
+                .add(543, "year")
+                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"
                               component="th"
                               scope="row"
                             >
+                              
                               {res.start}
                             </TableCell>
                             <TableCell
