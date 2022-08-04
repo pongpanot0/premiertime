@@ -12,7 +12,6 @@ import Chart from "./Chart.jsx";
 import axios from "axios";
 import HideAppBar from "./Report";
 
-
 function Reportbase() {
   const [Count, setCount] = React.useState([]);
   const [Distince, setDistince] = React.useState([]);
@@ -21,6 +20,7 @@ function Reportbase() {
   const [set, Setset] = React.useState([]);
   const [limit, setLimit] = React.useState(100000);
   const [offset, setOffset] = React.useState(0);
+
   React.useEffect(() => {
     const items = localStorage.getItem("name");
     if (items) {
@@ -73,39 +73,38 @@ function Reportbase() {
   };
   return (
     <>
+      <HideAppBar />
+      <Box sx={{ minWidth: 275 }}>
+        <Card
+          variant="outlined"
+          style={{ border: "1px black", borderRadius: "25px" }}
+        >
+          <React.Fragment>
+            <CardContent>
+              <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
+                {items}
+              </Typography>
+              <Typography variant="h5" component="div">
+                เวลาทำงาน {set.Inwork} -{set.Outwork}
+              </Typography>
+              <hr></hr>
 
-    <HideAppBar/>
-    <Box sx={{ minWidth: 275 }}>
-      <Card
-        variant="outlined"
-        style={{ border: "1px black", borderRadius: "25px" }}
-      >
-        <React.Fragment>
-          <CardContent>
-            <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
-              {items}
-            </Typography>
-            <Typography variant="h5" component="div">
-              เวลาทำงาน {set.Inwork} -{set.Outwork}
-            </Typography>
-            <hr></hr>
+              <Chart
+                notstamp={Count}
+                getDistince={Distince}
+                countEmployees={Employess}
+              />
+              <Tablereport setting={set} />
 
-            <Chart
-              notstamp={Count}
-              getDistince={Distince}
-              countEmployees={Employess}
-            />
-            <Tablereport setting={set} />
-
-            <Typography variant="h5"> ยังไม่สแกน {Count.count} คน</Typography>
-            <Noattendance />
-          </CardContent>
-          <CardContent>
-            <ReportAccoding />
-          </CardContent>
-        </React.Fragment>
-      </Card>
-    </Box>
+              <Typography variant="h5"> ยังไม่สแกน {Count.count} คน</Typography>
+              <Noattendance />
+            </CardContent>
+            <CardContent>
+              <ReportAccoding />
+            </CardContent>
+          </React.Fragment>
+        </Card>
+      </Box>
     </>
   );
 }

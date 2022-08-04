@@ -1,18 +1,15 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import { Route, Routes,Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
-import { styled, alpha } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Reportbase from "../components/Reportbase";
 import "./report.css";
-import MonthReport from "./MonthReport";
 import logo from "../ezLINE3.png";
 export default function HideAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,19 +20,21 @@ export default function HideAppBar() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("company_name");
     localStorage.removeItem("name");
     localStorage.removeItem("Companyid");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("logged_in_status");
+    localStorage.removeItem("email");
     window.location = "/";
   };
 
   const logoutTimerIdRef = React.useRef(null);
 
   React.useEffect(() => {
+    
     const autoLogout = () => {
       if (document.visibilityState === "hidden") {
         const timeOutId = window.setTimeout(logout, 60 * 60 * 1000);
@@ -67,14 +66,12 @@ export default function HideAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { sm: "block" } }}
           >
-                <Link to="/report">
-                <img src={logo} width="125px"  alt="HIPezLine"/>
-                </Link>
-      
+            <Link to="/report">
+              <img src={logo} width="125px" alt="HIPezLine" />
+            </Link>
           </Typography>
-      
-          <div className="css">
 
+          <div className="css">
             <Button
               style={{ backgroundColor: "white" }}
               id="demo-positioned-button"
@@ -106,7 +103,6 @@ export default function HideAppBar() {
           </Menu>
         </Toolbar>
       </AppBar>
-
     </Box>
   );
 }

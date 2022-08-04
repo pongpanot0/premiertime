@@ -1,30 +1,47 @@
 import logo from "./logo.svg";
 import "./App.css";
-import Report from "./components/Report";
 import SignIn from "./components/Login";
 import React, { Component } from "react";
-import GuardedRoute from "./components/GuardedRoute";
-import { Outlet, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import MonthReport from "./components/MonthReport";
 import DatetoDate from "./components/DatetoDate";
 import Reportbase from "./components/Reportbase";
+import { AuthProvider } from "./components/auth";
+import { RequireAuth } from "./components/RequireAuth";
 function App() {
-  const [isAutheticated, setisAutheticated] = React.useState(false);
-
-  function login() {
-    setisAutheticated(true);
-    console.log("loggedInUser:" + isAutheticated);
-  }
-
   return (
-    <>
+    <AuthProvider>
       <Routes>
-        <Route exact path="/" element={<SignIn />} />
-        <Route exact path="/report" element={<Reportbase />} />
-        <Route exact path="/monthreport/:id" element={<MonthReport />} />
-        <Route exact path="/datetodate/:id/:date" element={<DatetoDate />} />
+        <Route path="/" element={<SignIn />} />
+        <Route
+          
+          path="/report"
+          element={
+            <RequireAuth>
+              <Reportbase />
+            </RequireAuth>
+          }
+        />
+        <Route
+          exact
+          path="/monthreport/:id"
+          element={
+            <RequireAuth>
+              <MonthReport />
+            </RequireAuth>
+          }
+        />
+        <Route
+          exact
+          path="/datetodate/:id/:date"
+          element={
+            <RequireAuth>
+              <DatetoDate />
+            </RequireAuth>
+          }
+        />
       </Routes>
-    </>
+    </AuthProvider>
   );
 }
 

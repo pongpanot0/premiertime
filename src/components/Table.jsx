@@ -211,7 +211,7 @@ export default function Tablereport() {
       />
 
       <TableContainer component={Paper}>
-        <Table xs={{ maxWidth: 650 }} aria-label="simple table">
+        <Table xs={{ width: 600 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center" onClick={handleSortRequest}>
