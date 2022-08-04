@@ -20,6 +20,7 @@ import { Button } from "@material-ui/core";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import HideAppBar from "./Report";
+import TextField from "@mui/material/TextField";
 import moment from "moment";
 import "./report.css";
 
@@ -36,6 +37,7 @@ export default function DatetoDate() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const [open2, setOpen2] = React.useState(false);
+  const [searchedVal3, setSearchedVal3] = React.useState("");
   const handleClose2 = () => {
     setOpen2(false);
   };
@@ -141,6 +143,14 @@ export default function DatetoDate() {
   };
   const dateElement = atten
     .slice(pagesVisited, pagesVisited + usersPerPage)
+    .filter(
+      (row) =>
+        // note that I've incorporated the searchedVal length check here
+        !searchedVal3.length ||
+        row.Name.toString()
+          .toLowerCase()
+          .includes(searchedVal3.toString().toLowerCase())
+    )
     .map((row, i) => {
       if (row.start === undefined) {
         return (
@@ -188,7 +198,7 @@ export default function DatetoDate() {
             </AccordionSummary>
             <AccordionDetails>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <Table xs={{  maxWidth: 650  }} aria-label="caption table">
                   <caption>
                     จำนวนการแสกนนิ้ว : {row.scan} วัน สายรวมกันทั้งหมด {sum}{" "}
                     นาที
@@ -326,6 +336,12 @@ export default function DatetoDate() {
             <Button onClick={getExcel}>ออกรายงาน Excel</Button>
           </Menu>
         </Stack>
+        <br></br>
+        <TextField
+        label="ค้นหาด้วยชื่อ"
+        sx={{ width: "100%" }}
+        onChange={(e) => setSearchedVal3(e.target.value)}
+      />
         {dateElement}
         <ReactPaginate
           previousLabel={"Previous"}

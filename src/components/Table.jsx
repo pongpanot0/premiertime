@@ -175,8 +175,9 @@ export default function Tablereport() {
         <TableBody>
           <TableRow align="center" key={row.index}>
             <TableCell align="center">{row.Enrollnumber}</TableCell>
-            <TableCell align="center">{row.Name}</TableCell>
             <TableCell align="center">{row.Depname}</TableCell>
+            <TableCell align="center">{row.Name}</TableCell>
+
             <TableCell align="center"></TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
@@ -188,8 +189,9 @@ export default function Tablereport() {
         <TableBody>
           <TableRow align="center" key={row.index}>
             <TableCell align="center">{row.Enrollnumber}</TableCell>
-            <TableCell align="center">{row.Name}</TableCell>
             <TableCell align="center">{row.Depname}</TableCell>
+            <TableCell align="center">{row.Name}</TableCell>
+
             <TableCell align="center">{row.start.time}</TableCell>
             <TableCell align="center">{row.last.time}</TableCell>
           </TableRow>
@@ -207,7 +209,7 @@ export default function Tablereport() {
       />
 
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table xs={{ maxWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
               <TableCell align="center" onClick={handleSortRequest}>
@@ -217,6 +219,11 @@ export default function Tablereport() {
                 </TableSortLabel>
               </TableCell>
 
+              <TableCell align="center" onClick={handleSortRequest3}>
+                <TableSortLabel active={true} direction={orderDirection3}>
+                  แผนก
+                </TableSortLabel>
+              </TableCell>
               <TableCell align="center" onClick={handleSortRequest2}>
                 {" "}
                 <TableSortLabel active={true} direction={orderDirection2}>
@@ -224,11 +231,6 @@ export default function Tablereport() {
                 </TableSortLabel>
               </TableCell>
 
-              <TableCell align="center" onClick={handleSortRequest3}>
-                <TableSortLabel active={true} direction={orderDirection3}>
-                  แผนก
-                </TableSortLabel>
-              </TableCell>
               <TableCell align="center" onClick={handleSortRequest4}>
                 <TableSortLabel active={true} direction={orderDirection4}>
                   เข้า

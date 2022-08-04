@@ -20,8 +20,10 @@ import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Button } from "@material-ui/core";
 import './report.css'
+import TextField from "@mui/material/TextField";
 import HideAppBar from "./Report";
 export default function MonthReport() {
+  const [searchedVal3, setSearchedVal3] = React.useState("");
   const [expanded, setExpanded] = React.useState(false);
   const [items, setItems] = React.useState("");
   let { id } = useParams();
@@ -123,6 +125,14 @@ export default function MonthReport() {
   };
   const dateElement = atten
     .slice(pagesVisited, pagesVisited + usersPerPage)
+    .filter(
+      (row) =>
+        // note that I've incorporated the searchedVal length check here
+        !searchedVal3.length ||
+        row.Name.toString()
+          .toLowerCase()
+          .includes(searchedVal3.toString().toLowerCase())
+    )
     .map((row, i) => {
       if (row.start === undefined) {
         return (
@@ -169,7 +179,7 @@ export default function MonthReport() {
             </AccordionSummary>
             <AccordionDetails>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="caption table">
+                <Table xs={{ maxWidth: 650 }} aria-label="caption table">
                   <caption>
                     จำนวนการแสกนนิ้ว : {row.scan} วัน สายรวมกันทั้งหมด {sum}{" "}
                     นาที
@@ -266,6 +276,7 @@ export default function MonthReport() {
 <HideAppBar/>
 <br></br>
     <div className="margin">
+ 
       {open2 ? (
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
@@ -308,6 +319,12 @@ export default function MonthReport() {
           <Button onClick={getExcel}>ออกรายงาน Excel</Button>
         </Menu>
       </Stack>
+      <br></br>
+      <TextField
+        label="ค้นหาด้วยชื่อ"
+        sx={{ width: "100%" }}
+        onChange={(e) => setSearchedVal3(e.target.value)}
+      />
       {dateElement}
       <ReactPaginate
         previousLabel={"Previous"}
