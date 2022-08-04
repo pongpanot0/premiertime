@@ -1,6 +1,6 @@
 import * as React from "react";
 import AppBar from "@mui/material/AppBar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes,Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import Box from "@mui/material/Box";
@@ -67,9 +67,14 @@ export default function HideAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { sm: "block" } }}
           >
-            <img src={logo} width="125px"  alt="HIPezLine"/>
+                <Link to="/report">
+                <img src={logo} width="125px"  alt="HIPezLine"/>
+                </Link>
+      
           </Typography>
+      
           <div className="css">
+
             <Button
               style={{ backgroundColor: "white" }}
               id="demo-positioned-button"
