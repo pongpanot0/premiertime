@@ -13,6 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Reportbase from "../components/Reportbase";
 import "./report.css";
 import MonthReport from "./MonthReport";
+import logo from "../ezLINE3.png";
 export default function HideAppBar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -66,7 +67,7 @@ export default function HideAppBar() {
             component="div"
             sx={{ flexGrow: 1, display: { sm: "block" } }}
           >
-            MUI
+            <img src={logo} width="125px"  alt="HIPezLine"/>
           </Typography>
           <div className="css">
             <Button
@@ -100,7 +101,7 @@ export default function HideAppBar() {
           </Menu>
         </Toolbar>
       </AppBar>
-<Reportbase/>
+
     </Box>
   );
 }

@@ -128,9 +128,9 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="รหัสพนักงาน"
-              name="รหัสพนักงาน"
-              autoComplete="รหัสพนักงาน"
+              label="รหัสผู้ใช้"
+              name="รหัสผู้ใช้"
+              autoComplete="รหัสผู้ใช้"
               autoFocus
               onChange={(e) => {
                 setEmail(e.target.value);

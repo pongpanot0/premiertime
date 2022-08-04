@@ -20,7 +20,7 @@ export default function Tablereport() {
   const [items, setItems] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
-
+  const [searchedVal3, setSearchedVal3] = useState("");
   useEffect(() => {
     const items = localStorage.getItem("name");
     if (items) {
@@ -159,8 +159,15 @@ export default function Tablereport() {
     setCategoryList(sortArray(CategoryList, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
   };
-  const dateElement = CategoryList?.map((row, index) => {
-    console.log(row)
+  const dateElement = CategoryList?.filter(
+    (row) =>
+      // note that I've incorporated the searchedVal length check here
+      !searchedVal3.length ||
+      row.Name.toString()
+        .toLowerCase()
+        .includes(searchedVal3.toString().toLowerCase())
+  ).map((row, index) => {
+    console.log(row);
     const current = "17:30".replace(":", "");
     const time = "17:30".replace(":", "");
     if (row.start === undefined) {
@@ -196,7 +203,7 @@ export default function Tablereport() {
       <TextField
         label="ค้นหาด้วยชื่อ"
         sx={{ width: "100%" }}
-        onChange={(e) => setSearchedVal(e.target.value)}
+        onChange={(e) => setSearchedVal3(e.target.value)}
       />
 
       <TableContainer component={Paper}>

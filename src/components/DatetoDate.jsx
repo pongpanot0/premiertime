@@ -16,15 +16,18 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Menu from "@mui/material/Menu";
+import { Button } from "@material-ui/core";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Button } from "@material-ui/core";
-import './report.css'
 import HideAppBar from "./Report";
-export default function MonthReport() {
+import moment from "moment";
+import "./report.css";
+
+export default function DatetoDate() {
   const [expanded, setExpanded] = React.useState(false);
   const [items, setItems] = React.useState("");
   let { id } = useParams();
+  let { date } = useParams();
   const [atten, setnotAtten] = React.useState([].slice(0, 10));
   const [pageNumber, setPageNumber] = React.useState(0);
   const usersPerPage = 10;
@@ -43,74 +46,89 @@ export default function MonthReport() {
     setAnchorEl(null);
   };
   const getCsv = (e) => {
-    setAnchorEl(false);
     setOpen2(open);
     e.preventDefault();
     axios({
-      url: `${process.env.REACT_APP_API_KEY}/Exportlogs/${items}/${id}`, //your url
+      url: `${
+        process.env.REACT_APP_API_KEY
+      }/ExportlogsDatetodate/${items}/${moment(id, "DD:MM:YYYY").format(
+        "DD:MM:YYYY"
+      )}/${moment(date, "DD:MM:YYYY").add(1, "days").format("DD:MM:YYYY")}`, //your url
       method: "GET",
-      responseType: "blob", // important
+      responseType: "blob",
     }).then((response) => {
       console.log(response);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: "" })
+      );
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${id}.txt`); //or any other extension
+      link.setAttribute("download", `${id}to${date}.txt`); //or any other extension
       document.body.appendChild(link);
       link.click();
       setOpen2(!open);
     });
   };
   const getExcel = (e) => {
-    setOpen2(open2);
+    setOpen2(open);
     e.preventDefault();
     axios({
-      url: `${process.env.REACT_APP_API_KEY}/exportExcel/${items}/${id}`, //your url
+      url: `${
+        process.env.REACT_APP_API_KEY
+      }/exportExcelDatetoDate/${items}/${moment(id, "DD:MM:YYYY").format(
+        "DD:MM:YYYY"
+      )}/${moment(date, "DD:MM:YYYY").add(1, "days").format("DD:MM:YYYY")}`, //your url
       method: "GET",
-      responseType: "blob", // important
+      responseType: "blob",
     }).then((response) => {
       console.log(response);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const url = window.URL.createObjectURL(
+        new Blob([response.data], { type: "" })
+      );
       const link = document.createElement("a");
       link.href = url;
-      link.setAttribute("download", `${id}.xlsx`); //or any other extension
+      link.setAttribute("download", `${id}to${date}.XLSX`); //or any other extension
       document.body.appendChild(link);
       link.click();
       setOpen2(!open);
     });
   };
+
   React.useEffect(() => {
     setOpen2(true);
     const items = localStorage.getItem("name");
+    if (items) {
+      setItems(items);
+    }
     const timer = setTimeout(() => {
       setOpen2(!true);
     }, 2000);
 
     const fetchData = async () => {
       axios
-        .get(`${process.env.REACT_APP_API_KEY}/exportdate/${id}/${items}`)
+        .get(
+          `${process.env.REACT_APP_API_KEY}/datetodate/${items}/${moment(
+            id,
+            "DD:MM:YYYY"
+          ).format("DD:MM:YYYY")}/${moment(date, "DD:MM:YYYY")
+            .add(1, "days")
+            .format("DD:MM:YYYY")}`
+        )
         .then((res) => {
-       
+          setOpen2(!open);
           setnotAtten(res.data.data);
         });
     };
-
-    if (items) {
-      setItems(items);
-    }
-
     fetchData();
     setting();
     return () => clearTimeout(timer);
   }, []);
-  
   const pageCount = Math.ceil(atten.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
   };
   const setting = () => {
     const items = localStorage.getItem("name");
-
     axios
       .get(`${process.env.REACT_APP_API_KEY}/setting/${items}`)
       .then((res) => {
@@ -152,6 +170,7 @@ export default function MonthReport() {
           (total, currentItem) => (total = total + currentItem.late),
           0
         );
+
         return (
           <Accordion expanded={expanded === i} onChange={handleChange(i)}>
             <AccordionSummary
@@ -263,64 +282,63 @@ export default function MonthReport() {
     });
   return (
     <>
-<HideAppBar/>
-<br></br>
-    <div className="margin">
-      {open2 ? (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open2}
-          onClick={handleClose2}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
-        <></>
-      )}
+      <HideAppBar />
+      <br></br>
+      <div className="margin">
+     
+        {open2 ? (
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open2}
+            onClick={handleClose2}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        ) : (
+          <></>
+        )}
 
-      <Button
-        variant="contained"
-        color="primary"
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        ออกรายงาน
-      </Button>
-
-      <Stack spacing={2}>
-        <Menu
-        className="css"
+        <Button
           style={{ marginLeft: "auto", marginRight: "55", display: "block" }}
-          direction="row"
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
+          variant="contained"
+          color="primary"
+          id="basic-button"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
         >
-          <Button onClick={getCsv}>ออกรายงาน CSV</Button>
-          <br></br>
-          <Button onClick={getExcel}>ออกรายงาน Excel</Button>
-        </Menu>
-      </Stack>
-      {dateElement}
-      <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={"paginationBttns"}
-        previousLinkClassName={"previousBttns"}
-        nextLinkClassName={"nextBttn"}
-        disabledClassName={"paginationDisabled"}
-        activeClassName={"paginationActive"}
-      />
-    </div>
+          ออกรายงาน
+        </Button>
+        <Stack spacing={2}>
+          <Menu
+            direction="row"
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <Button onClick={getCsv}>ออกรายงาน CSV</Button>
+            <br></br>
+            <Button onClick={getExcel}>ออกรายงาน Excel</Button>
+          </Menu>
+        </Stack>
+        {dateElement}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttns"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+        />
+      </div>
     </>
   );
 }

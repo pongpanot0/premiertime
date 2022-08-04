@@ -15,8 +15,6 @@ const style = {
   bgcolor: "background.paper",
 };
 export default function Noattendance() {
-
-
   const [atten, setnotAtten] = React.useState([].slice(0, 10));
   const [pageNumber, setPageNumber] = React.useState(0);
   const usersPerPage = 10;
@@ -25,7 +23,7 @@ export default function Noattendance() {
 
   const displayUsers = atten
     .slice(pagesVisited, pagesVisited + usersPerPage)
-    .map((date) => {
+    .map((date, i) => {
       if (date === null) {
         return <h1>ยังไม่มีข้อมูล</h1>;
       } else {
@@ -34,7 +32,7 @@ export default function Noattendance() {
             <List sx={style} component="nav" aria-label="mailbox folders">
               <ListItem button>
                 <ListItemText
-                  key={date.Badgenumber}
+                  key={i}
                   primary={date.Name}
                   secondary={
                     <React.Fragment>
@@ -44,7 +42,7 @@ export default function Noattendance() {
                         variant="body2"
                         color="text.primary"
                       >
-                       แผนก : {date.Depname}
+                        แผนก : {date.Depname}
                       </Typography>
                       <br></br> รหัสพนักงาน : {date.Enrollnumber}
                     </React.Fragment>
@@ -67,10 +65,12 @@ export default function Noattendance() {
     if (items) {
       setItems(items);
     }
-    axios.get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`).then((res) => {
-      console.log(items)
-      setnotAtten(res.data.data);
-    });
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`)
+      .then((res) => {
+        console.log(items);
+        setnotAtten(res.data.data);
+      });
   }, []);
 
   return (

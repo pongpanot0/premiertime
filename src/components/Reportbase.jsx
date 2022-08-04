@@ -12,14 +12,6 @@ import Chart from "./Chart.jsx";
 import axios from "axios";
 import HideAppBar from "./Report";
 
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
 
 function Reportbase() {
   const [Count, setCount] = React.useState([]);
@@ -80,10 +72,13 @@ function Reportbase() {
       .catch((err) => console.log(err));
   };
   return (
+    <>
+
+    <HideAppBar/>
     <Box sx={{ minWidth: 275 }}>
       <Card
         variant="outlined"
-        style={{ border: "1px rounded black", borderRadius: "25px" }}
+        style={{ border: "1px black", borderRadius: "25px" }}
       >
         <React.Fragment>
           <CardContent>
@@ -91,7 +86,7 @@ function Reportbase() {
               {items}
             </Typography>
             <Typography variant="h5" component="div">
-              เวลาทำงาน {set.Inwork} -{set.Outwork} {items}
+              เวลาทำงาน {set.Inwork} -{set.Outwork}
             </Typography>
             <hr></hr>
 
@@ -111,6 +106,7 @@ function Reportbase() {
         </React.Fragment>
       </Card>
     </Box>
+    </>
   );
 }
 
