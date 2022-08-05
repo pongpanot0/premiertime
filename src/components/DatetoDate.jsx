@@ -223,7 +223,7 @@ export default function DatetoDate() {
                             >
                               {moment(res._id, "DD:MM:YYYY")
                 .locale("th")
-                .add(543, "year")
+             
                 .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
@@ -260,7 +260,7 @@ export default function DatetoDate() {
                             >
                              {moment(res._id, "DD:MM:YYYY")
                 .locale("th")
-                .add(543, "year")
+          
                 .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
