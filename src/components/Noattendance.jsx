@@ -33,7 +33,7 @@ export default function Noattendance() {
               <ListItem button>
                 <ListItemText
                   key={i}
-                  primary={date.Name}
+                  primary={'แผนก  '+date.Depname}
                   secondary={
                     <React.Fragment>
                       <Typography
@@ -42,7 +42,7 @@ export default function Noattendance() {
                         variant="body2"
                         color="text.primary"
                       >
-                        แผนก : {date.Depname}
+                        ชื่อ : {date.Name}
                       </Typography>
                       <br></br> รหัสพนักงาน : {date.Enrollnumber}
                     </React.Fragment>

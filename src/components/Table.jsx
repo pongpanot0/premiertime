@@ -191,7 +191,6 @@ export default function Tablereport() {
             <TableCell align="center">{row.Enrollnumber}</TableCell>
             <TableCell align="center">{row.Depname}</TableCell>
             <TableCell align="center">{row.Name}</TableCell>
-
             <TableCell align="center">{row.start.time}</TableCell>
             <TableCell align="center">{row.last.time}</TableCell>
           </TableRow>
@@ -211,10 +210,10 @@ export default function Tablereport() {
       />
 
       <TableContainer component={Paper}>
-        <Table xs={{ width: 600 }} aria-label="simple table">
+        <Table style={{ width: '350px!important' }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center" onClick={handleSortRequest}>
+              <TableCell align="center" onClick={handleSortRequest} width='250'>
                 {" "}
                 <TableSortLabel active={true} direction={orderDirection}>
                   รหัส
@@ -229,7 +228,7 @@ export default function Tablereport() {
               <TableCell align="center" onClick={handleSortRequest2}>
                 {" "}
                 <TableSortLabel active={true} direction={orderDirection2}>
-                  ชิ่อ
+                  ชื่อ
                 </TableSortLabel>
               </TableCell>
 

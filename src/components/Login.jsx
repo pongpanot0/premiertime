@@ -10,7 +10,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import logo from "../HIP-logo-01.png";
+import logo from "../icon_HIPezLINE.png";
 import axios from "axios";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -153,10 +153,10 @@ export default function SignIn() {
             alignItems: "center",
           }}
         >
-          <Avatar
+          <img
             alt="Remy Sharp"
             src={logo}
-            sx={{ width: 156, height: 156, bgcolor: "#13499f" }}
+            style={{ width: 156, height: 156 }}
           />
 
           <br></br>
