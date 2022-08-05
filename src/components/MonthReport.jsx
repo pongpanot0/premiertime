@@ -19,7 +19,7 @@ import Menu from "@mui/material/Menu";
 import Backdrop from "@mui/material/Backdrop";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Button } from "@material-ui/core";
-import './report.css'
+import "./report.css";
 import moment from "moment";
 import TextField from "@mui/material/TextField";
 import HideAppBar from "./Report";
@@ -93,7 +93,6 @@ export default function MonthReport() {
       axios
         .get(`${process.env.REACT_APP_API_KEY}/exportdate/${id}/${items}`)
         .then((res) => {
-       
           setnotAtten(res.data.data);
         });
     };
@@ -106,7 +105,7 @@ export default function MonthReport() {
     setting();
     return () => clearTimeout(timer);
   }, []);
-  
+
   const pageCount = Math.ceil(atten.length / usersPerPage);
   const changePage = ({ selected }) => {
     setPageNumber(selected);
@@ -135,7 +134,6 @@ export default function MonthReport() {
           .includes(searchedVal3.toString().toLowerCase())
     )
     .map((row, i) => {
-   
       if (row.start === undefined) {
         return (
           <Accordion expanded={expanded === i} onChange={handleChange(i)}>
@@ -196,7 +194,7 @@ export default function MonthReport() {
                   </TableHead>
                   <TableBody>
                     {row.start[0].map((res) => {
-                         console.log(res.id)
+                      console.log(res.id);
                       if (res.late === null) {
                         return (
                           <TableRow key={row.USERID}>
@@ -205,10 +203,10 @@ export default function MonthReport() {
                               component="th"
                               scope="row"
                             >
-                             {moment(res._id, "DD:MM:YYYY")
-                .locale("th")
-                .add(543, "year")
-                .format("DD/MM/YYYY")}
+                              {moment(res._id, "DD:MM:YYYY")
+                                .locale("th")
+
+                                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"
@@ -233,8 +231,6 @@ export default function MonthReport() {
                         );
                       }
                       if (res.late !== null) {
-                       
-
                         return (
                           <TableRow key={row.USERID}>
                             <TableCell
@@ -242,17 +238,16 @@ export default function MonthReport() {
                               component="th"
                               scope="row"
                             >
-                            {moment(res._id, "DD:MM:YYYY")
-                .locale("th")
-                .add(543, "year")
-                .format("DD/MM/YYYY")}
+                              {moment(res._id, "DD:MM:YYYY")
+                                .locale("th")
+
+                                .format("DD/MM/YYYY")}
                             </TableCell>
                             <TableCell
                               align="center"
                               component="th"
                               scope="row"
                             >
-                              
                               {res.start}
                             </TableCell>
                             <TableCell
@@ -283,71 +278,70 @@ export default function MonthReport() {
     });
   return (
     <>
-<HideAppBar/>
-<br></br>
-    <div className="margin">
- 
-      {open2 ? (
-        <Backdrop
-          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open2}
-          onClick={handleClose2}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      ) : (
-        <></>
-      )}
-
-      <Button
-        variant="contained"
-        color="primary"
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        ออกรายงาน
-      </Button>
-
-      <Stack spacing={2}>
-        <Menu
-        className="css"
-          style={{ marginLeft: "auto", marginRight: "55", display: "block" }}
-          direction="row"
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            "aria-labelledby": "basic-button",
-          }}
-        >
-          <Button onClick={getCsv}>ออกรายงาน CSV</Button>
-          <br></br>
-          <Button onClick={getExcel}>ออกรายงาน Excel</Button>
-        </Menu>
-      </Stack>
+      <HideAppBar />
       <br></br>
-      <TextField
-        label="ค้นหาด้วยชื่อ"
-        sx={{ width: "100%" }}
-        onChange={(e) => setSearchedVal3(e.target.value)}
-      />
-      {dateElement}
-      <ReactPaginate
-        previousLabel={"Previous"}
-        nextLabel={"Next"}
-        pageCount={pageCount}
-        onPageChange={changePage}
-        containerClassName={"paginationBttns"}
-        previousLinkClassName={"previousBttns"}
-        nextLinkClassName={"nextBttn"}
-        disabledClassName={"paginationDisabled"}
-        activeClassName={"paginationActive"}
-      />
-    </div>
+      <div className="margin">
+        {open2 ? (
+          <Backdrop
+            sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open2}
+            onClick={handleClose2}
+          >
+            <CircularProgress color="inherit" />
+          </Backdrop>
+        ) : (
+          <></>
+        )}
+
+        <Button
+          variant="contained"
+          color="primary"
+          id="basic-button"
+          aria-controls={open ? "basic-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+        >
+          ออกรายงาน
+        </Button>
+
+        <Stack spacing={2}>
+          <Menu
+            className="css"
+            style={{ marginLeft: "auto", marginRight: "55", display: "block" }}
+            direction="row"
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              "aria-labelledby": "basic-button",
+            }}
+          >
+            <Button onClick={getCsv}>ออกรายงาน CSV</Button>
+            <br></br>
+            <Button onClick={getExcel}>ออกรายงาน Excel</Button>
+          </Menu>
+        </Stack>
+        <br></br>
+        <TextField
+          label="ค้นหาด้วยชื่อ"
+          sx={{ width: "100%" }}
+          onChange={(e) => setSearchedVal3(e.target.value)}
+        />
+        {dateElement}
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          pageCount={pageCount}
+          onPageChange={changePage}
+          containerClassName={"paginationBttns"}
+          previousLinkClassName={"previousBttns"}
+          nextLinkClassName={"nextBttn"}
+          disabledClassName={"paginationDisabled"}
+          activeClassName={"paginationActive"}
+        />
+      </div>
     </>
   );
 }

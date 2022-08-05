@@ -52,6 +52,7 @@ export default function HideAppBar() {
   }, []);
   return (
     <Box sx={{ flexGrow: 1 }}>
+      
       <AppBar position="relative">
         <Toolbar>
           <IconButton
