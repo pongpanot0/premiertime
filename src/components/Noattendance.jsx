@@ -6,50 +6,66 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import axios from "axios";
 import ReactPaginate from "react-paginate";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import Divider from "@mui/material/Divider";
-const style = {
-  width: "100%",
-  bgcolor: "background.paper",
-};
+import CorporateFareIcon from "@mui/icons-material/CorporateFare";
 export default function Noattendance() {
   const [atten, setnotAtten] = React.useState([].slice(0, 10));
   const [pageNumber, setPageNumber] = React.useState(0);
   const usersPerPage = 10;
   const pagesVisited = pageNumber * usersPerPage;
   //40 > 50
+  const [open, setOpen] = React.useState(true);
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const displayUsers = atten
     .slice(pagesVisited, pagesVisited + usersPerPage)
-    .map((date, i) => {
+
+    .map((date, i, { Depname, Depcode }) => {
+      console.log(date);
       if (date === null) {
         return <h1>ยังไม่มีข้อมูล</h1>;
       } else {
         return (
           <div>
-            <List sx={style} component="nav" aria-label="mailbox folders">
-              <ListItem button>
-                <ListItemText
-                  key={i}
-                  primary={'แผนก  '+date.Depname}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: "inline" }}
-                        component="span"
-                        variant="body2"
-                        color="text.primary"
-                      >
-                        ชื่อ : {date.Name}
-                      </Typography>
-                      <br></br> รหัสพนักงาน : {date.Enrollnumber}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </List>
+            <Accordion
+              expanded={expanded === date.Depcode}
+              onChange={handleChange(date.Depcode)}
+            >
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1bh-content"
+                id="panel1bh-header"
+              >
+                <Typography variant="h6" sx={{ width: "100%" }}>
+                  <CorporateFareIcon /> {date.Depcode}
+                </Typography>
+              </AccordionSummary>
+              {date.Detail.map((res) => {
+                return (
+                  <AccordionDetails>
+                    <Typography
+                      sx={{ display: "inline" }}
+                      component="span"
+                      variant="subtitle1"
+                      color="text.primary"
+                    >
+                      คุณ : {res.Name} (รหัสพนักงาน : {res.Enrollnumber})
+                    </Typography>
+                  </AccordionDetails>
+                );
+              })}
+              <Typography  sx={{ color: "text.secondary" ,float:'right',paddingRight:5}}>
+                จำนวน {date.Detail.length} คน
+              </Typography>
+            </Accordion>
+
+            <br></br>
           </div>
         );
       }
@@ -68,7 +84,6 @@ export default function Noattendance() {
     axios
       .get(`${process.env.REACT_APP_API_KEY}/notstamp/${items}`)
       .then((res) => {
-        console.log(items);
         setnotAtten(res.data.data);
       });
   }, []);
