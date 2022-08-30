@@ -20,7 +20,7 @@ function Reportbase() {
   const [set, Setset] = React.useState([]);
   const [limit, setLimit] = React.useState(100000);
   const [offset, setOffset] = React.useState(0);
-
+  const [name, setName] = React.useState([]);
   React.useEffect(() => {
     const items = localStorage.getItem("name");
     if (items) {
@@ -30,7 +30,18 @@ function Reportbase() {
     notstamp();
     countEmployees();
     setting();
+    getName();
   }, [items]);
+  const getName = () => {
+    const items = localStorage.getItem("name");
+    axios
+      .get(`${process.env.REACT_APP_API_KEY}/getCompanyname/${items}`)
+      .then((res) => {
+        console.log(res.data);
+        setName(res.data.data[0]);
+      })
+      .catch((err) => console.log(err));
+  };
   const setting = () => {
     const items = localStorage.getItem("name");
     axios
