@@ -63,7 +63,7 @@ export default function SignIn() {
         password: password,
       })
       .then((res) => {
-        console.log(res);
+       
         if (res.data.status === 200) {
           setOpen(true);
           localStorage.setItem("logged_in_status", JSON.stringify(true));

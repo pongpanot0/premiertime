@@ -14,8 +14,7 @@ import Paper from "@mui/material/Paper";
 import { Typography } from "@mui/material";
 
 export default function Example({ notstamp, getDistince, countEmployees }) {
-  console.log(getDistince);
-  console.log(notstamp.count);
+
   const data = [
     { name: "เข้างานแล้ว", value: getDistince.count3 },
     { name: "ยังไม่เข้างาน", value: notstamp.count },

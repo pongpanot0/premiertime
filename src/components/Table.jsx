@@ -15,33 +15,34 @@ import axios from "axios";
 export default function Tablereport() {
   const [number, setNumber] = useState([]);
   const [searchedVal, setSearchedVal] = useState("");
-  const [CategoryList, setCategoryList] = useState([]);
+  const [CategoryList, setCategoryList] = useState([].slice(0, 10));
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [items, setItems] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [offset, setOffset] = React.useState(0);
   const [searchedVal3, setSearchedVal3] = useState("");
+  const [pageNumber, setPageNumber] = React.useState(0);
   useEffect(() => {
     const items = localStorage.getItem("name");
     if (items) {
       setItems(items);
       axios
         .get(
-          `${process.env.REACT_APP_API_KEY}/stamp/${items}/${rowsPerPage}/${offset}`
+          `${process.env.REACT_APP_API_KEY}/stamp/${items}`
         )
         .then((res) => {
-          console.log(res.data.data);
+          
           setCategoryList(res.data.data);
           setNumber(parseInt(res.data.count3));
         })
-        .catch((err) => console.log(err));
+   
     }
   }, [rowsPerPage, items, offset]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     setOffset(5 + page * offset);
-    console.log(offset);
+   
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -57,7 +58,7 @@ export default function Tablereport() {
   const [orderDirection4, setOrderDirection4] = React.useState("asc");
   const [orderDirection5, setOrderDirection5] = React.useState("asc");
   const sortArray5 = (arr, orderBy) => {
-    console.log(arr);
+
     switch (orderBy) {
       case "asc":
       default:
@@ -76,7 +77,7 @@ export default function Tablereport() {
     setOrderDirection5(orderDirection5 === "asc" ? "desc" : "asc");
   };
   const sortArray4 = (arr, orderBy) => {
-    console.log(arr);
+
     switch (orderBy) {
       case "asc":
       default:
@@ -95,7 +96,7 @@ export default function Tablereport() {
     setOrderDirection4(orderDirection4 === "asc" ? "desc" : "asc");
   };
   const sortArray3 = (arr, orderBy) => {
-    console.log(arr);
+  
     switch (orderBy) {
       case "asc":
       default:
@@ -114,7 +115,7 @@ export default function Tablereport() {
     setOrderDirection3(orderDirection3 === "asc" ? "desc" : "asc");
   };
   const sortArray2 = (arr, orderBy) => {
-    console.log(arr);
+   
     switch (orderBy) {
       case "asc":
       default:
@@ -133,7 +134,7 @@ export default function Tablereport() {
     setOrderDirection2(orderDirection2 === "asc" ? "desc" : "asc");
   };
   const sortArray = (arr, orderBy) => {
-    console.log(arr);
+   
     switch (orderBy) {
       case "asc":
       default:
@@ -153,8 +154,9 @@ export default function Tablereport() {
             : 0
         );
     }
-  };
-
+  };  
+  const usersPerPage = 10;
+  const pagesVisited = pageNumber * usersPerPage;
   const handleSortRequest = () => {
     setCategoryList(sortArray(CategoryList, orderDirection));
     setOrderDirection(orderDirection === "asc" ? "desc" : "asc");
@@ -166,10 +168,10 @@ export default function Tablereport() {
       row.Name.toString()
         .toLowerCase()
         .includes(searchedVal3.toString().toLowerCase())
-  ).map((row, index) => {
-    console.log(row);
-    const current = "17:30".replace(":", "");
-    const time = "17:30".replace(":", "");
+  )
+  .slice(pagesVisited, pagesVisited + usersPerPage)
+  .map((row, index) => {
+   
     if (row.start === undefined) {
       return (
         <TableBody>

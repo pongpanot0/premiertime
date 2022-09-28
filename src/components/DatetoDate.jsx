@@ -59,7 +59,7 @@ export default function DatetoDate() {
       method: "GET",
       responseType: "blob",
     }).then((response) => {
-      console.log(response);
+    
       const url = window.URL.createObjectURL(
         new Blob([response.data], { type: "" })
       );
@@ -83,7 +83,7 @@ export default function DatetoDate() {
       method: "GET",
       responseType: "blob",
     }).then((response) => {
-      console.log(response);
+     
       const url = window.URL.createObjectURL(
         new Blob([response.data], { type: "" })
       );
@@ -136,7 +136,7 @@ export default function DatetoDate() {
       .then((res) => {
         Setset(res.data.data[0]);
       })
-      .catch((err) => console.log(err));
+    
   };
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -249,7 +249,7 @@ export default function DatetoDate() {
                         );
                       }
                       if (res.late !== null) {
-                        console.log(res);
+                   
 
                         return (
                           <TableRow key={row.USERID}>

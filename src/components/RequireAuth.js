@@ -5,7 +5,7 @@ export const RequireAuth = ({children}) => {
     const location = useLocation()
     const auth = useAuth()
     const items = localStorage.getItem("logged_in_status");
-    console.log(items)
+  
     if(items === null){
         return <Navigate to='/' state={{path:location.pathname}} />
     }

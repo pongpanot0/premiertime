@@ -54,7 +54,7 @@ export default function MonthReport() {
       method: "GET",
       responseType: "blob", // important
     }).then((response) => {
-      console.log(response);
+      
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -72,7 +72,7 @@ export default function MonthReport() {
       method: "GET",
       responseType: "blob", // important
     }).then((response) => {
-      console.log(response);
+   
       const url = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
       link.href = url;
@@ -118,7 +118,7 @@ export default function MonthReport() {
       .then((res) => {
         Setset(res.data.data[0]);
       })
-      .catch((err) => console.log(err));
+  
   };
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -194,7 +194,7 @@ export default function MonthReport() {
                   </TableHead>
                   <TableBody>
                     {row.start[0].map((res) => {
-                      console.log(res.id);
+                 
                       if (res.late === null) {
                         return (
                           <TableRow key={row.USERID}>

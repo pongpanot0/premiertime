@@ -13,7 +13,7 @@ export default function Calendar() {
 
         setDatereport(res.data.data);
       })
-      .catch((err) => console.log(err));
+      
   };
   const dateElement = datereport.map((date) => {
     if (date === null) {

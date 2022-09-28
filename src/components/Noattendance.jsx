@@ -27,7 +27,7 @@ export default function Noattendance() {
     .slice(pagesVisited, pagesVisited + usersPerPage)
 
     .map((date, i, { Depname, Depcode }) => {
-      console.log(date);
+    
       if (date === null) {
         return <h1>ยังไม่มีข้อมูล</h1>;
       } else {

@@ -37,11 +37,12 @@ function Reportbase() {
     axios
       .get(`${process.env.REACT_APP_API_KEY}/getCompanyname/${items}`)
       .then((res) => {
-        console.log(res.data);
-        setName(res.data.data[0]);
+       
+        setName(res.data[0].Companyname);
       })
-      .catch((err) => console.log(err));
+     
   };
+ 
   const setting = () => {
     const items = localStorage.getItem("name");
     axios
@@ -49,7 +50,7 @@ function Reportbase() {
       .then((res) => {
         Setset(res.data.data[0]);
       })
-      .catch((err) => console.log(err));
+      
   };
   const notstamp = () => {
     const items = localStorage.getItem("name");
@@ -59,17 +60,17 @@ function Reportbase() {
       .then((res) => {
         setCount(res.data);
       })
-      .catch((err) => console.log(err));
+
   };
   const getDistince = () => {
     const items = localStorage.getItem("name");
     axios
       .get(`${process.env.REACT_APP_API_KEY}/stamp/${items}/${limit}/${offset}`)
       .then((res) => {
-        console.log(res);
+   
         setDistince(res.data);
       })
-      .catch((err) => console.log(err));
+    
   };
   const countEmployees = () => {
     const items = localStorage.getItem("name");
@@ -77,10 +78,10 @@ function Reportbase() {
     axios
       .get(`${process.env.REACT_APP_API_KEY}/employees/${items}`)
       .then((res) => {
-        console.log(res);
+    
         setEmployess(res.data.count);
       })
-      .catch((err) => console.log(err));
+     
   };
   return (
     <>
@@ -93,7 +94,7 @@ function Reportbase() {
           <React.Fragment>
             <CardContent>
               <Typography sx={{ fontSize: 48 }} color="text.main" gutterBottom>
-                {items}
+                {name}
               </Typography>
               <Typography variant="h5" component="div">
                 เวลาทำงาน {set.Inwork} -{set.Outwork}
